@@ -26,6 +26,7 @@
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
     "framer-motion": "^12.4.2",
+    "gsap": "^3.13.0",
     "html-react-parser": "^5.2.2",
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",

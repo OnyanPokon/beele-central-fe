@@ -22,4 +22,20 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
   }
+
+  /* Navbar menu styles */
+  .custom-menu .ant-menu-item,
+  .custom-menu .ant-menu-submenu-title {
+    transition: color 0.3s ease;
+  }
+
+  .custom-menu.menu-top .ant-menu-item,
+  .custom-menu.menu-top .ant-menu-submenu-title {
+    color: white !important;
+  }
+
+  .custom-menu.menu-scrolled .ant-menu-item,
+  .custom-menu.menu-scrolled .ant-menu-submenu-title {
+    color: #4980c1 !important;
+  }
 }

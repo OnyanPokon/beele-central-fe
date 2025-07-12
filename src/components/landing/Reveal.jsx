@@ -2,7 +2,7 @@
 import { motion, useAnimation, useInView } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 
-const Reveal = ({ children }) => {
+const Reveal = ({ children, color = '#518ed6' }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false });
 
@@ -43,7 +43,7 @@ const Reveal = ({ children }) => {
           bottom: 4,
           left: 0,
           right: 0,
-          background: '#377fed',
+          background: color,
           zIndex: 20
         }}
       />

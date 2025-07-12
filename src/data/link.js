@@ -8,6 +8,21 @@ export const landingLink = [
     label: 'Beranda',
     key: '/',
     element: Landing.Home
+  },
+  {
+    label: 'Tentang Kami',
+    key: '/',
+    element: Landing.Home
+  },
+  {
+    label: 'Testimoni',
+    key: '/',
+    element: Landing.Home
+  },
+  {
+    label: 'Daftar',
+    key: '/',
+    element: Landing.Home
   }
 ];
 

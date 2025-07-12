@@ -4,11 +4,9 @@ import { Outlet } from 'react-router-dom';
 const Landing = () => {
   return (
     <div className="flex h-dvh flex-col font-sans">
-      <header className="fixed left-0 right-0 top-0 z-[999] border border-slate-300 bg-white">
-        <Navbar />
-      </header>
+      <Navbar />
 
-      <main className="flex-auto bg-white pt-8">
+      <main className="flex-auto bg-white">
         <Outlet />
         <Footer />
       </main>
