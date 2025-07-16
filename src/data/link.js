@@ -1,7 +1,7 @@
 import * as Auth from '@/pages/auth';
 import * as Dashboard from '@/pages/dashboard';
 import * as Landing from '@/pages/landing';
-import { DashboardOutlined } from '@ant-design/icons';
+import { DashboardOutlined, DatabaseOutlined } from '@ant-design/icons';
 
 export const landingLink = [
   {
@@ -10,19 +10,9 @@ export const landingLink = [
     element: Landing.Home
   },
   {
-    label: 'Tentang Kami',
-    key: '/',
-    element: Landing.Home
-  },
-  {
-    label: 'Testimoni',
-    key: '/',
-    element: Landing.Home
-  },
-  {
-    label: 'Daftar',
-    key: '/',
-    element: Landing.Home
+    label: 'Daftar Sebagai Mitra',
+    key: '/member_register',
+    element: Landing.MemberRegister
   }
 ];
 
@@ -46,6 +36,11 @@ export const dashboardLink = [
     label: 'Overview',
     icon: DashboardOutlined,
     children: [{ path: '/dashboard', label: 'Dashboard', element: Dashboard.Dashboard }]
+  },
+  {
+    label: 'Pendaftar',
+    icon: DatabaseOutlined,
+    children: [{ path: '/dashboard/pendaftar', label: 'Pendaftar', element: Dashboard.Registrants }]
   }
 ].map((item) => ({
   ...item,

@@ -1,5 +1,5 @@
 const Dashboard = () => {
-  return <div className="grid w-full grid-cols-12 gap-4">wellcome</div>;
+  return <div>Dashboard</div>;
 };
 
 export default Dashboard;

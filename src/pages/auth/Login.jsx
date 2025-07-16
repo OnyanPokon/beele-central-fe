@@ -26,7 +26,6 @@ const Login = () => {
       <div className="mb-5 mt-4 flex w-full flex-col items-center justify-center gap-y-2">
         <div className="mb-4 flex flex-col items-center justify-center gap-y-2 text-center">
           <h1 className="text-xl font-semibold">Selamat Datang!</h1>
-          <p className="max-w-xs text-xs">Sistem Informasi berbasis website untuk memenuhi kebutuhan pengelolaan manajemen</p>
         </div>
       </div>
       <Form name="login" layout="vertical" initialValues={{ remember: true }} onFinish={onFinish}>

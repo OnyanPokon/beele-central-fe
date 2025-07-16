@@ -1,17 +1,13 @@
 import { Action } from '@/constants';
-import { useAuth } from '@/hooks';
 import strings from '@/utils/strings';
 import { EditOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
 import PropTypes from 'prop-types';
 
-export default function Edit({ title = strings('edit'), onClick, model, action = Action.UPDATE }) {
-  const { user } = useAuth();
-  if (action !== Action.NONE && (!user || user.cant(action, model))) return null;
-
+export default function Edit({ title = strings('edit'), onClick }) {
   return (
     <Tooltip title={title}>
-      <Button variant="outlined" color="primary" icon={<EditOutlined />} onClick={onClick} />
+      <Button variant="link" color="primary" icon={<EditOutlined />} onClick={onClick} />
     </Tooltip>
   );
 }

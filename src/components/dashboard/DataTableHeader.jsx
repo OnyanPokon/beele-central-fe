@@ -1,14 +1,11 @@
-import { Action } from '@/constants';
 import { useAuth } from '@/hooks';
 import { DeleteOutlined, ExportOutlined, ImportOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Skeleton, Typography } from 'antd';
 import PropTypes from 'prop-types';
 
-const { CREATE, DELETE } = Action;
-
 const { Title, Text } = Typography;
 
-export default function DataHeader({ modul, subtitle, selectedData, onStore, onDeleteBatch, model, children, onImport, onExport }) {
+export default function DataHeader({ modul, subtitle, selectedData, onStore, onDeleteBatch, children, onImport, onExport }) {
   const { user } = useAuth();
 
   return (
@@ -24,14 +21,14 @@ export default function DataHeader({ modul, subtitle, selectedData, onStore, onD
             subtitle
           ))}
       </div>
-      {(children || (user && user.eitherCan([DELETE, model], [CREATE, model]))) && (
+      {(children || user) && (
         <div className="mb-6 flex flex-col-reverse justify-end gap-2 empty:hidden md:flex-row">
-          {user && user.can(DELETE, model) && onDeleteBatch && (
+          {user && onDeleteBatch && (
             <Button className="me-auto" icon={<DeleteOutlined />} variant="solid" color="danger" disabled={!selectedData?.length} onClick={onDeleteBatch}>
               Hapus {selectedData?.length || null} Pilihan
             </Button>
           )}
-          {user && user.can(CREATE, model) && onStore && (
+          {user && onStore && (
             <Button icon={<PlusOutlined />} type="primary" onClick={onStore}>
               Tambah
             </Button>
@@ -63,6 +60,5 @@ DataHeader.propTypes = {
   onExport: PropTypes.func,
   onDeleteBatch: PropTypes.func,
   selectedData: PropTypes.array,
-  model: PropTypes.func,
   children: PropTypes.node
 };
