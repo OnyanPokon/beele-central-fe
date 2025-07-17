@@ -5,6 +5,7 @@ import { RouterProvider } from 'react-router';
 import './index.css';
 import { flattenLandingLinks } from './utils/landingLink';
 import { Notfound } from './pages/result';
+import { ScrollToTop } from './components';
 
 function App() {
   const flatLandingLinks = flattenLandingLinks(landingLink);
@@ -18,7 +19,12 @@ function App() {
             // Tambahkan route dari landingLink
             ...flatLandingLinks.map(({ path, element: Element }) => ({
               path,
-              element: <Element />
+              element: (
+                <>
+                  <Element />
+                  <ScrollToTop />
+                </>
+              )
             })),
 
             { path: '*', element: <Notfound /> }

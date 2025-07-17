@@ -11,9 +11,11 @@ export const formFields = () => [
         message: `Nama toko harus diisi`
       }
     ],
-    size: 'large'
+    size: 'large',
+    extra: {
+      className: 'merchant_name'
+    }
   },
-
   {
     label: `Nama pemilik`,
     name: 'owner_name',
@@ -24,7 +26,10 @@ export const formFields = () => [
         message: `Nama pemilik harus diisi`
       }
     ],
-    size: 'large'
+    size: 'large',
+    extra: {
+      className: 'owner_name'
+    }
   },
   {
     label: `Nomor telp`,
@@ -46,7 +51,7 @@ export const formFields = () => [
     ],
     size: 'large',
     extra: {
-      className: 'w-full'
+      className: 'w-full telp'
     }
   },
   {
@@ -60,7 +65,10 @@ export const formFields = () => [
       },
       { type: 'email', message: 'Gunakan email yang valid' }
     ],
-    size: 'large'
+    size: 'large',
+    extra: {
+      className: 'email'
+    }
   },
   {
     label: `Nama Domain (Masukan nama domain toko yang anda inginkan)`,
@@ -75,7 +83,8 @@ export const formFields = () => [
     size: 'large',
     extra: {
       addonBefore: 'http://',
-      addonAfter: '.beele.id'
+      addonAfter: '.beele.id',
+      className: 'domain'
     }
   }
 ];
