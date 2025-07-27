@@ -66,7 +66,7 @@ const Registrants = () => {
             onClick={() => {
               modal.edit({
                 title: `Edit ${Modul.REGISTRANTS}`,
-                data: { ...record, domain: record.domain.replace(/^http:\/\//, '').replace(/\.belee\.id$/, '') },
+                data: record,
                 formFields: [
                   ...formFields(),
                   {
@@ -139,7 +139,7 @@ const Registrants = () => {
                   {
                     key: 'domain',
                     label: `Domain`,
-                    children: record.domain
+                    children: `http://${record.domain}.belee.id`
                   },
                   {
                     key: 'status',
@@ -202,7 +202,7 @@ const Registrants = () => {
       title: `Tambah ${Modul.REGISTRANTS}`,
       formFields: formFields,
       onSubmit: async (values) => {
-        const { message, isSuccess } = await storeRegistrant.execute({ ...values, domain: `http://${values.domain}.belee.id`, status: 'menunggu' }, token);
+        const { message, isSuccess } = await storeRegistrant.execute({ ...values, status: 'menunggu' }, token);
         if (isSuccess) {
           success('Berhasil', message);
           fetchRegistrants({ token: token, page: pagination.page, per_page: pagination.per_page });
