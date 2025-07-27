@@ -1,6 +1,7 @@
 enum Modul {
   REGISTRANTS = 'Pendaftar',
-  TENANT = 'Tenant'
+  TENANT = 'Tenant',
+  TESTIMONIAL = 'Testimoni'
 }
 
 export default Modul;

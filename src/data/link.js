@@ -42,7 +42,8 @@ export const dashboardLink = [
     icon: DatabaseOutlined,
     children: [
       { path: '/dashboard/pendaftar', label: 'Pendaftar', element: Dashboard.Registrants },
-      { path: '/dashboard/tenant', label: 'Tenant', element: Dashboard.Tenants }
+      { path: '/dashboard/tenant', label: 'Tenant', element: Dashboard.Tenants },
+      { path: '/dashboard/testimoni', label: 'Testimoni', element: Dashboard.Testimonials }
     ]
   }
 ].map((item) => ({

@@ -3,3 +3,4 @@ export { default as User } from './User';
 export { default as Model } from './Model';
 export { default as Registrants } from './Registrants';
 export { default as Tenants } from './Tenants';
+export { default as Testimonial } from './Testimonial';

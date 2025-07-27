@@ -1,12 +1,18 @@
 import { FormItem, Reveal } from '@/components';
-import { InputType } from '@/constants';
 import { CheckCircleFilled, ShopOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { Avatar, Button, Card, Form, Typography } from 'antd';
+import { Avatar, Button, Card, Form, Popconfirm, Rate, Typography } from 'antd';
 import gsap from 'gsap';
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
+import { useNotification, useService } from '@/hooks';
+import { TestimonialService } from '@/services';
+import { formFields } from '../dashboard/testimonials/FormFields';
 
 const Home = () => {
   const cardsWrapperRef = useRef(null);
+  const [testimonialValues, setTestimonialValues] = useState({});
+  const [form] = Form.useForm();
+  const storeTestimonial = useService(TestimonialService.store);
+  const { success, error } = useNotification();
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -34,33 +40,6 @@ const Home = () => {
 
     return () => ctx.revert();
   }, []);
-
-  const formFields = () => [
-    {
-      label: `Nama`,
-      name: 'nama',
-      type: InputType.TEXT,
-      rules: [
-        {
-          required: true,
-          message: `Nama harus diisi`
-        }
-      ],
-      size: 'large'
-    },
-    {
-      label: `Testimonial`,
-      name: 'testimonial',
-      type: InputType.LONGTEXT,
-      rules: [
-        {
-          required: true,
-          message: `Nama harus diisi`
-        }
-      ],
-      size: 'large'
-    }
-  ];
 
   return (
     <>
@@ -221,14 +200,51 @@ const Home = () => {
             }}
             className="w-full rounded-xl bg-white shadow-lg"
           >
-            <Form layout="vertical" className="flex h-full flex-col justify-between p-12">
+            <Form form={form} layout="vertical" className="flex h-full flex-col justify-between p-12">
               <div className="mb-4 flex flex-1 flex-col gap-y-4 overflow-y-auto">
                 <FormItem formFields={formFields()} />
               </div>
               <div className="flex flex-col gap-y-4">
-                <Button size="large" variant="solid" color="primary">
-                  Berikutnya
-                </Button>
+                <Popconfirm
+                  title="Seberapa puas kamu?"
+                  description={
+                    <div className="flex flex-col gap-y-1">
+                      Seberapa puas kamu dengan pelayanan yang kami berikan?
+                      <Rate onChange={(value) => setTestimonialValues({ ...testimonialValues, rating: value })} />
+                    </div>
+                  }
+                  onConfirm={async () => {
+                    try {
+                      await form.validateFields();
+                      const values = form.getFieldsValue();
+
+                      const payload = {
+                        ...testimonialValues,
+                        ...values
+                      };
+
+                      const { message, isSuccess } = await storeTestimonial.execute(payload);
+                      if (isSuccess) {
+                        form.resetFields();
+                        success('Berhasil', message);
+                      } else {
+                        error('Gagal', message);
+                      }
+                      return isSuccess;
+                    } catch (err) {
+                      console.error(err);
+                      return false;
+                    }
+                  }}
+                  onCancel={() => {
+                    form.resetFields();
+                    setTestimonialValues({});
+                  }}
+                >
+                  <Button size="large" variant="solid" color="primary">
+                    Berikutnya
+                  </Button>
+                </Popconfirm>
               </div>
             </Form>
           </div>

@@ -4,7 +4,7 @@ import { useAuth, useCrudModal, useNotification, usePagination, useService } fro
 import { Button, Card, Space, Tag } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { DataTable, DataTableHeader } from '@/components';
-import { Registrants as RegistrantsModel } from '@/models';
+import { Tenants as TenantsModel } from '@/models';
 import dateFormatter from '@/utils/dateFormatter';
 import { TenantsService } from '@/services';
 import { formFields } from './FormFields';
@@ -88,7 +88,7 @@ const Tenants = () => {
         <Space size="small">
           <Edit
             title={`Edit ${Modul.TENANT}`}
-            model={RegistrantsModel}
+            model={TenantsModel}
             onClick={() => {
               modal.edit({
                 title: `Edit ${Modul.TENANT}`,
@@ -109,7 +109,7 @@ const Tenants = () => {
           />
           <Detail
             title={`Detail ${Modul.TENANT}`}
-            model={RegistrantsModel}
+            model={TenantsModel}
             onClick={() => {
               modal.show.description({
                 title: record.merchant_name,
@@ -172,7 +172,7 @@ const Tenants = () => {
           />
           <Delete
             title={`Delete ${Modul.TENANT}`}
-            model={RegistrantsModel}
+            model={TenantsModel}
             onClick={() => {
               modal.delete.default({
                 title: `Delete ${Modul.TENANT}`,

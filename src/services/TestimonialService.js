@@ -1,26 +1,26 @@
 /* eslint-disable no-unused-vars */
-import { Tenants } from '@/models';
+import { Testimonial } from '@/models';
 import api from '@/utils/api';
 
-export default class TenantsService {
+export default class TestimonialService {
   /**
    * @param {string} token
    * @returns {Promise<{
    *  code: HTTPStatusCode;
    *  status: boolean;
    *  message: string;
-   *  data?: Tenants[];
+   *  data?: Testimonial[];
    * }>}
    * */
   static async getAll({ token, ...filters }) {
     const params = Object.fromEntries(Object.entries(filters).filter(([_, value]) => value !== null && value !== undefined && value !== ''));
-    const response = await api.get('/tenant', { token, params });
+    const response = await api.get('/testimoni', { token, params });
     if (!response.data) return response;
-    return { ...response, data: Tenants.fromApiData(response.data) };
+    return { ...response, data: Testimonial.fromApiData(response.data) };
   }
 
   /**
-   * @param {Tenants} data
+   * @param {Testimonial} data
    * @param {string} token
    * @returns {Promise<{
    *  code: HTTPStatusCode;
@@ -29,13 +29,13 @@ export default class TenantsService {
    *  errors?: { [key: string]: string[] };
    * }}
    */
-  static async store(data, token) {
-    return await api.post('/tenant', { body: Tenants.toApiData(data), token });
+  static async store(data) {
+    return await api.post('/testimoni', { body: Testimonial.toApiData(data) });
   }
 
   /**
    * @param {number} id
-   * @param {Tenants} data
+   * @param {Testimonial} data
    * @param {string} token
    * @returns {Promise<{
    *  code: HTTPStatusCode;
@@ -45,7 +45,7 @@ export default class TenantsService {
    * }>}
    */
   static async update(id, data, token) {
-    return await api.patch(`/tenant/${id}`, { body: Tenants.toApiData(data), token });
+    return await api.patch(`/testimoni/${id}`, { body: Testimonial.toApiData(data), token });
   }
 
   /**
@@ -58,7 +58,7 @@ export default class TenantsService {
    * }>}
    */
   static async delete(id, token) {
-    return await api.delete(`/tenant/${id}`, { token });
+    return await api.delete(`/testimoni/${id}`, { token });
   }
 
   /**
@@ -71,6 +71,6 @@ export default class TenantsService {
    * }>}
    */
   static async deleteBatch(ids, token) {
-    return await api.delete(`/tenant/?ids=${ids.join(',')}`, { token });
+    return await api.delete(`/testimoni/?ids=${ids.join(',')}`, { token });
   }
 }
