@@ -17,7 +17,6 @@ const Tenants = () => {
   const { success, error } = useNotification();
   const { execute, ...getAllTenants } = useService(TenantsService.getAll);
   const { execute: executeRegistrants, ...getRegistrants } = useService(RegistransService.getAll);
-  const storeTenant = useService(TenantsService.store);
   const updateTenant = useService(TenantsService.update);
   const deleteTenant = useService(TenantsService.delete);
   const deleteBatchTenants = useService(TenantsService.deleteBatch);
@@ -194,23 +193,6 @@ const Tenants = () => {
     });
   }
 
-  const onCreate = () => {
-    modal.create({
-      title: `Tambah ${Modul.TENANT}`,
-      formFields: formFields({ options: { registrants } }),
-      onSubmit: async (values) => {
-        const { message, isSuccess } = await storeTenant.execute({ ...values, expired_date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] }, token);
-        if (isSuccess) {
-          success('Berhasil', message);
-          fetchTenants({ token: token, page: pagination.page, per_page: pagination.per_page });
-        } else {
-          error('Gagal', message);
-        }
-        return isSuccess;
-      }
-    });
-  };
-
   const onDeleteBatch = () => {
     modal.delete.batch({
       title: `Hapus ${selectedTenants.length} ${Modul.TENANT} Yang Dipilih ? `,
@@ -231,7 +213,7 @@ const Tenants = () => {
 
   return (
     <Card>
-      <DataTableHeader onStore={onCreate} modul={Modul.TENANT} onDeleteBatch={onDeleteBatch} selectedData={selectedTenants} onSearch={(values) => setFilterValues({ search: values })} />
+      <DataTableHeader modul={Modul.TENANT} onDeleteBatch={onDeleteBatch} selectedData={selectedTenants} onSearch={(values) => setFilterValues({ search: values })} />
       <div className="w-full max-w-full overflow-x-auto">
         <DataTable data={tenants} columns={column} loading={getAllTenants.isLoading} map={(tenant) => ({ key: tenant.id, ...tenant })} pagination={pagination} handleSelectedData={(_, selectedRows) => setSelectedTenants(selectedRows)} />
       </div>

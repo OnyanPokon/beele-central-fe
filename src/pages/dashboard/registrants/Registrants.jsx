@@ -2,13 +2,13 @@ import { Delete, Detail, Edit } from '@/components/dashboard/button';
 import Modul from '@/constants/Modul';
 import { useAuth, useCrudModal, useNotification, usePagination, useService } from '@/hooks';
 import { RegistrantsService } from '@/services';
-import { Card, Space, Tag } from 'antd';
+import { Button, Card, Popconfirm, Space, Tag, Tooltip } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { formFields } from './FormFields';
 import { DataTable, DataTableHeader } from '@/components';
 import { Registrants as RegistrantsModel } from '@/models';
 import dateFormatter from '@/utils/dateFormatter';
-import { InputType } from '@/constants';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 const Registrants = () => {
   const { token, user } = useAuth();
@@ -52,6 +52,24 @@ const Registrants = () => {
       dataIndex: 'owner_name',
       sorter: (a, b) => a.owner_name.length - b.owner_name.length,
       searchable: true
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      sorter: (a, b) => a.status.length - b.status.length,
+      searchable: true,
+      render: (record) => {
+        switch (record) {
+          case 'menunggu':
+            return <Tag color="warning">Menunggu</Tag>;
+          case 'diterima':
+            return <Tag color="blue">Diterima</Tag>;
+          case 'ditolak':
+            return <Tag color="red">Ditolak</Tag>;
+          default:
+            return <Tag color="error">{record}</Tag>;
+        }
+      }
     }
   ];
 
@@ -67,37 +85,9 @@ const Registrants = () => {
               modal.edit({
                 title: `Edit ${Modul.REGISTRANTS}`,
                 data: record,
-                formFields: [
-                  ...formFields(),
-                  {
-                    label: `Status`,
-                    name: 'status',
-                    type: InputType.SELECT,
-                    rules: [
-                      {
-                        required: true,
-                        message: `Status harus diisi`
-                      }
-                    ],
-                    options: [
-                      {
-                        label: 'Diterima',
-                        value: 'diterima'
-                      },
-                      {
-                        label: 'Ditolak',
-                        value: 'ditolak'
-                      },
-                      {
-                        label: 'Menunggu',
-                        value: 'menunggu'
-                      }
-                    ],
-                    size: 'large'
-                  }
-                ],
+                formFields: formFields(),
                 onSubmit: async (values) => {
-                  const { message, isSuccess } = await updateResgitrant.execute(record.id, { ...values, domain: `http://${values.domain}.belee.id`, status: 'menunggu' }, token);
+                  const { message, isSuccess } = await updateResgitrant.execute(record.id, { ...values, status: record.status }, token);
                   if (isSuccess) {
                     success('Berhasil', message);
                     fetchRegistrants({ token: token, page: pagination.page, per_page: pagination.per_page });
@@ -171,6 +161,64 @@ const Registrants = () => {
               });
             }}
           />
+          {record.status === 'menunggu' && (
+            <>
+              <Tooltip title="Terima Pendaftar">
+                <Popconfirm
+                  title="Proses pendaftaran"
+                  description="apakah anda yakin akan menerima pendaftaran?"
+                  onConfirm={async () => {
+                    const { message: updateStatusMsg, isSuccess: updateStatusSuccess } = await updateResgitrant.execute(
+                      record.id,
+                      {
+                        ...record,
+                        status: 'diterima'
+                      },
+                      token
+                    );
+
+                    if (!updateStatusSuccess) {
+                      error('Gagal', updateStatusMsg);
+                      return false;
+                    }
+
+                    success('Berhasil', 'Pendaftaran berhasil diproses');
+                    fetchRegistrants({ token: token, page: pagination.page, per_page: pagination.per_page });
+                    return true;
+                  }}
+                >
+                  <Button variant="link" color="primary" icon={<CheckOutlined />} />
+                </Popconfirm>
+              </Tooltip>
+              <Tooltip title="Tolak Pendaftar">
+                <Popconfirm
+                  title="Tolak pendaftaran"
+                  description="apakah anda yakin akan menolak pendaftaran?"
+                  onConfirm={async () => {
+                    const { message: updateStatusMsg, isSuccess: updateStatusSuccess } = await updateResgitrant.execute(
+                      record.id,
+                      {
+                        ...record,
+                        status: 'ditolak'
+                      },
+                      token
+                    );
+
+                    if (!updateStatusSuccess) {
+                      error('Gagal', updateStatusMsg);
+                      return false;
+                    }
+
+                    success('Berhasil', 'Pendaftaran berhasil diproses');
+                    fetchRegistrants({ token: token, page: pagination.page, per_page: pagination.per_page });
+                    return true;
+                  }}
+                >
+                  <Button variant="link" color="danger" icon={<CloseOutlined />} />
+                </Popconfirm>
+              </Tooltip>
+            </>
+          )}
           <Delete
             title={`Delete ${Modul.REGISTRANTS}`}
             model={RegistrantsModel}

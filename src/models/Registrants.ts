@@ -7,7 +7,7 @@ export interface IncomingApiData {
   email: string;
   telepon: string;
   domain: string;
-  status: 'aktif' | 'nonaktif' | 'menunggu';
+  status: 'diterima' | 'ditolak' | 'menunggu';
   created_at: string;
   updated_at: string;
 }
@@ -18,7 +18,7 @@ interface FormValue {
   email: string;
   telp: string;
   domain: string;
-  status: 'aktif' | 'nonaktif' | 'menunggu';
+  status: 'diterima' | 'ditolak' | 'menunggu';
 }
 
 export interface OutgoingApiData {
@@ -27,7 +27,7 @@ export interface OutgoingApiData {
   email: string;
   telepon: string;
   domain: string;
-  status: 'aktif' | 'nonaktif' | 'menunggu';
+  status: 'diterima' | 'ditolak' | 'menunggu';
 }
 
 type ReturnType<S, From, To> = S extends From[] ? To[] : To;
@@ -40,7 +40,7 @@ export default class Registrants extends Model {
     public email: string,
     public telp: string,
     public domain: string,
-    public status: 'aktif' | 'nonaktif' | 'menunggu',
+    public status: 'diterima' | 'ditolak' | 'menunggu',
     public created_at: string,
     public updated_at: string
   ) {

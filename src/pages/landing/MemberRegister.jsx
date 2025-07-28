@@ -38,7 +38,7 @@ const MemberRegister = () => {
   }, []);
 
   const handleSubmit = async () => {
-    const { message, isSuccess } = await storeRegistrant.execute({ ...values, domain: `http://${values.domain}.belee.id`, status: 'menunggu' });
+    const { message, isSuccess } = await storeRegistrant.execute({ ...values, status: 'menunggu' });
     if (isSuccess) {
       success('Berhasil', message);
       setStep('form');
