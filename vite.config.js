@@ -11,6 +11,10 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  build: {
+    outDir: 'build', // Pastikan output adalah 'build' sesuai workflow
+    sourcemap: true,
+  },
   test: {
     environment: 'jsdom'
   }
