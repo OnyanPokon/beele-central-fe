@@ -14,7 +14,6 @@ const FormItem = ({ formFields }) => {
 
       case InputType.LONGTEXT:
         return <TextArea placeholder={item.label} rows={4} readOnly={item.readOnly} size={item.size} {...item.extra} />;
-
       case InputType.DATE:
         return <DatePicker size={item.size} placeholder={`Pilih ${item.label}`} readOnly={item.readOnly} {...item.extra} />;
       case InputType.SELECT:

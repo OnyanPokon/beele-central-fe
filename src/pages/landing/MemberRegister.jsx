@@ -1,6 +1,6 @@
 import { Avatar, Button, Card, Checkbox, FloatButton, Form, Tour, Typography } from 'antd';
 import { formFields } from '../dashboard/registrants/FormFields';
-import { FormItem } from '@/components';
+import { FormItem, Reveal } from '@/components';
 import { CheckCircleFilled, QuestionCircleOutlined, RightOutlined, WarningOutlined } from '@ant-design/icons';
 import React from 'react';
 import { useNotification, useService } from '@/hooks';
@@ -58,7 +58,13 @@ const MemberRegister = () => {
         backgroundSize: 'cover'
       }}
     >
-      <div className="mx-auto flex min-h-screen w-full max-w-screen-md items-center justify-center px-6 py-28">
+      <div className="mx-auto flex min-h-screen w-full max-w-screen-md flex-col items-center justify-center px-6 py-28">
+        <div className="my-12 flex flex-col items-center justify-center gap-y-2">
+          <Typography.Title level={2} style={{ color: '#fff', textAlign: 'center' }}>
+            <Reveal color="#fff">Lorem ipsum dolor sit amet,</Reveal>
+          </Typography.Title>
+          <p className="max-w-md text-center text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore </p>
+        </div>
         <div
           style={{
             backgroundImage: `url('/image_asset/background/member_bg.png')`,
@@ -68,24 +74,26 @@ const MemberRegister = () => {
           className="h-[45rem] w-full rounded-xl bg-white shadow-lg"
         >
           {step === 'form' && (
-            <Form form={form} layout="vertical" className="flex h-full flex-col justify-between p-12">
-              <div className="body-form mb-4 flex flex-1 flex-col gap-y-4 overflow-y-auto">
-                <FormItem formFields={formFields()} />
-              </div>
-              <div className="flex flex-col gap-y-4">
-                <Card className="bg-primary-100/20">
-                  <div className="relative">
-                    <p className="text-secondary-500">mohon pastikan seluruh data yang Anda isi sudah benar dan lengkap. Kesalahan data dapat menghambat proses pendaftaran dan verifikasi UMKM Anda.</p>
-                    <Avatar className="absolute -top-11 right-0" style={{ backgroundColor: '#142b71', color: '#fff' }} size="large">
-                      <WarningOutlined />
-                    </Avatar>
-                  </div>
-                </Card>
-                <Button size="large" variant="solid" color="primary" icon={<RightOutlined />} onClick={handleNext}>
-                  Berikutnya
-                </Button>
-              </div>
-            </Form>
+            <>
+              <Form form={form} layout="vertical" className="flex h-full flex-col justify-between p-6 lg:p-12">
+                <div className="body-form mb-4 flex flex-1 flex-col gap-y-4 overflow-y-auto">
+                  <FormItem formFields={formFields()} />
+                </div>
+                <div className="flex flex-col gap-y-4">
+                  <Card className="bg-primary-100/20">
+                    <div className="relative">
+                      <p className="text-secondary-500">mohon pastikan seluruh data yang Anda isi sudah benar dan lengkap. Kesalahan data dapat menghambat proses pendaftaran dan verifikasi UMKM Anda.</p>
+                      <Avatar className="absolute -top-11 right-0" style={{ backgroundColor: '#142b71', color: '#fff' }} size="large">
+                        <WarningOutlined />
+                      </Avatar>
+                    </div>
+                  </Card>
+                  <Button size="large" variant="solid" color="primary" icon={<RightOutlined />} onClick={handleNext}>
+                    Berikutnya
+                  </Button>
+                </div>
+              </Form>
+            </>
           )}
           {step === 'terms' && (
             <div className="flex h-full flex-col justify-between p-12">

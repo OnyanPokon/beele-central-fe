@@ -1,18 +1,13 @@
-import { FormItem, Reveal } from '@/components';
+import { Reveal } from '@/components';
 import { CheckCircleFilled, ShopOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { Avatar, Button, Card, Form, Popconfirm, Rate, Typography } from 'antd';
+import { Avatar, Button, Card, Typography } from 'antd';
 import gsap from 'gsap';
-import { useLayoutEffect, useRef, useState } from 'react';
-import { useNotification, useService } from '@/hooks';
-import { TestimonialService } from '@/services';
-import { formFields } from '../dashboard/testimonials/FormFields';
+import { useLayoutEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const cardsWrapperRef = useRef(null);
-  const [testimonialValues, setTestimonialValues] = useState({});
-  const [form] = Form.useForm();
-  const storeTestimonial = useService(TestimonialService.store);
-  const { success, error } = useNotification();
+  const navigate = useNavigate();
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -58,13 +53,13 @@ const Home = () => {
               <Reveal color="#fff">consectetur adipiscing elit,</Reveal>
             </Typography.Title>
             <p className="text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <Button className="mt-12 w-fit" size="large">
-              Cari Tahu Sekarang
+            <Button className="mt-12 w-fit" size="large" onClick={() => navigate('/member_register')}>
+              Daftar sekarang
             </Button>
           </div>
-          <div className="flex-[1]"></div>
+          <div className="hidden flex-[1] lg:block"></div>
         </div>
-        <div className="pointer-events-none absolute bottom-0 flex w-full items-center" ref={cardsWrapperRef}>
+        <div className="pointer-events-none absolute bottom-0 hidden w-full items-center lg:flex" ref={cardsWrapperRef}>
           <span className="flex-[1]" />
           <div className="ms-40 flex flex-[1] items-start justify-start">
             <figure className="relative xl:w-[32rem] 2xl:w-[35rem]">
@@ -111,8 +106,8 @@ const Home = () => {
             <Reveal>Bagaimana pendapat orang tentang Belee?</Reveal>
           </Typography.Title>
         </div>
-        <div className="grid grid-cols-6 gap-4">
-          <Card className="relative col-span-2 bg-gray-100/50">
+        <div className="grid grid-cols-6 gap-4 gap-y-8">
+          <Card className="relative col-span-6 bg-gray-100/50 lg:col-span-2">
             <div className="mt-4 flex flex-col gap-y-2">
               <Typography.Title level={5} style={{ color: '#142b71' }}>
                 <Reveal>Mohamad Rafiq Daud (Owner of UMKM GO)</Reveal>
@@ -123,7 +118,7 @@ const Home = () => {
             </div>
             <Avatar src="/image_asset/figure/user.png" className="absolute -top-4 left-6 border border-gray-200" size="large" style={{ backgroundColor: '#fff', color: '#396396' }} />
           </Card>
-          <Card className="relative col-span-2 bg-gray-100/50">
+          <Card className="relative col-span-6 bg-gray-100/50 lg:col-span-2">
             <div className="mt-4 flex flex-col gap-y-2">
               <Typography.Title level={5} style={{ color: '#142b71' }}>
                 <Reveal>Mohamad Rafiq Daud (Owner of UMKM GO)</Reveal>
@@ -134,7 +129,7 @@ const Home = () => {
             </div>
             <Avatar src="/image_asset/figure/user.png" className="absolute -top-4 left-6 border border-gray-200" size="large" style={{ backgroundColor: '#fff', color: '#396396' }} />
           </Card>
-          <Card className="relative col-span-2 bg-gray-100/50">
+          <Card className="relative col-span-6 bg-gray-100/50 lg:col-span-2">
             <div className="mt-4 flex flex-col gap-y-2">
               <Typography.Title level={5} style={{ color: '#142b71' }}>
                 <Reveal>Mohamad Rafiq Daud (Owner of UMKM GO)</Reveal>
@@ -148,7 +143,7 @@ const Home = () => {
         </div>
         <hr />
         <div className="grid grid-cols-6 gap-4">
-          <Card className="col-span-2 bg-gray-100/50">
+          <Card className="col-span-6 bg-gray-100/50 lg:col-span-2">
             <Typography.Title level={5}>
               <Reveal>Belee In Your Bussiness</Reveal>
             </Typography.Title>
@@ -165,7 +160,7 @@ const Home = () => {
               backgroundPosition: 'center',
               backgroundSize: 'cover'
             }}
-            className="col-span-4 text-white"
+            className="col-span-6 text-white lg:col-span-4"
           >
             <div className="flex flex-col gap-y-2 p-4">
               <Typography.Title level={5} style={{ color: '#fff' }}>
@@ -179,75 +174,6 @@ const Home = () => {
               <Button className="mt-4 w-fit">Daftar Sebagai Mitra</Button>
             </div>
           </Card>
-        </div>
-      </section>
-      <section
-        style={{
-          backgroundImage: `url('/image_asset/background/testimonial_bg.png')`,
-          backgroundPosition: 'center',
-          backgroundSize: 'cover'
-        }}
-      >
-        <div className="mx-auto flex min-h-screen w-full max-w-screen-md flex-col items-center justify-center gap-y-12 px-6 py-28">
-          <Typography.Title level={3} style={{ color: '#fff' }}>
-            Kirim Tetimoni dan Feedback
-          </Typography.Title>
-          <div
-            style={{
-              backgroundImage: `url('/image_asset/background/member_bg.png')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover'
-            }}
-            className="w-full rounded-xl bg-white shadow-lg"
-          >
-            <Form form={form} layout="vertical" className="flex h-full flex-col justify-between p-12">
-              <div className="mb-4 flex flex-1 flex-col gap-y-4 overflow-y-auto">
-                <FormItem formFields={formFields()} />
-              </div>
-              <div className="flex flex-col gap-y-4">
-                <Popconfirm
-                  title="Seberapa puas kamu?"
-                  description={
-                    <div className="flex flex-col gap-y-1">
-                      Seberapa puas kamu dengan pelayanan yang kami berikan?
-                      <Rate onChange={(value) => setTestimonialValues({ ...testimonialValues, rating: value })} />
-                    </div>
-                  }
-                  onConfirm={async () => {
-                    try {
-                      await form.validateFields();
-                      const values = form.getFieldsValue();
-
-                      const payload = {
-                        ...testimonialValues,
-                        ...values
-                      };
-
-                      const { message, isSuccess } = await storeTestimonial.execute(payload);
-                      if (isSuccess) {
-                        form.resetFields();
-                        success('Berhasil', message);
-                      } else {
-                        error('Gagal', message);
-                      }
-                      return isSuccess;
-                    } catch (err) {
-                      console.error(err);
-                      return false;
-                    }
-                  }}
-                  onCancel={() => {
-                    form.resetFields();
-                    setTestimonialValues({});
-                  }}
-                >
-                  <Button size="large" variant="solid" color="primary">
-                    Berikutnya
-                  </Button>
-                </Popconfirm>
-              </div>
-            </Form>
-          </div>
         </div>
       </section>
     </>
