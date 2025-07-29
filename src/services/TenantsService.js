@@ -71,6 +71,6 @@ export default class TenantsService {
    * }>}
    */
   static async deleteBatch(ids, token) {
-    return await api.delete(`/tenant/?ids=${ids.join(',')}`, { token });
+    return await api.delete(`/tenant?ids=${ids.join(',')}`, { token });
   }
 }

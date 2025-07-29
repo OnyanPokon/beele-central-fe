@@ -71,6 +71,6 @@ export default class TestimonialService {
    * }>}
    */
   static async deleteBatch(ids, token) {
-    return await api.delete(`/testimoni/?ids=${ids.join(',')}`, { token });
+    return await api.delete(`/testimoni?ids=${ids.join(',')}`, { token });
   }
 }

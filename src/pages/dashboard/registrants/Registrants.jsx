@@ -16,7 +16,7 @@ const Registrants = () => {
   const { success, error } = useNotification();
   const { execute, ...getAllRegistrants } = useService(RegistrantsService.getAll);
   const storeRegistrant = useService(RegistrantsService.store);
-  const updateResgitrant = useService(RegistrantsService.update);
+  const updateRegistrant = useService(RegistrantsService.update);
   const deleteRegistrant = useService(RegistrantsService.delete);
   const deleteBatchRegistrants = useService(RegistrantsService.deleteBatch);
   const [filterValues, setFilterValues] = useState({ search: '' });
@@ -87,7 +87,7 @@ const Registrants = () => {
                 data: record,
                 formFields: formFields(),
                 onSubmit: async (values) => {
-                  const { message, isSuccess } = await updateResgitrant.execute(record.id, { ...values, status: record.status }, token);
+                  const { message, isSuccess } = await updateRegistrant.execute(record.id, { ...values, status: record.status }, token);
                   if (isSuccess) {
                     success('Berhasil', message);
                     fetchRegistrants({ token: token, page: pagination.page, per_page: pagination.per_page });
@@ -168,7 +168,7 @@ const Registrants = () => {
                   title="Proses pendaftaran"
                   description="apakah anda yakin akan menerima pendaftaran?"
                   onConfirm={async () => {
-                    const { message: updateStatusMsg, isSuccess: updateStatusSuccess } = await updateResgitrant.execute(
+                    const { message: updateStatusMsg, isSuccess: updateStatusSuccess } = await updateRegistrant.execute(
                       record.id,
                       {
                         ...record,
@@ -195,7 +195,7 @@ const Registrants = () => {
                   title="Tolak pendaftaran"
                   description="apakah anda yakin akan menolak pendaftaran?"
                   onConfirm={async () => {
-                    const { message: updateStatusMsg, isSuccess: updateStatusSuccess } = await updateResgitrant.execute(
+                    const { message: updateStatusMsg, isSuccess: updateStatusSuccess } = await updateRegistrant.execute(
                       record.id,
                       {
                         ...record,

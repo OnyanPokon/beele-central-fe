@@ -2,7 +2,7 @@
 import { Registrants } from '@/models';
 import api from '@/utils/api';
 
-export default class RegistransService {
+export default class RegistrantsService {
   /**
    * @param {string} token
    * @returns {Promise<{

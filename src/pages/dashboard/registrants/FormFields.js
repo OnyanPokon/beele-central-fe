@@ -83,7 +83,7 @@ export const formFields = () => [
     size: 'large',
     extra: {
       addonBefore: 'http://',
-      addonAfter: '.beele.id',
+      addonAfter: '.belee.id',
       className: 'domain'
     }
   }

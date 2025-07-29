@@ -55,7 +55,7 @@ export const additionalField = () => [
     ],
     options: [
       {
-        label: 'Menuggu',
+        label: 'Menunggu',
         value: 'menunggu'
       },
       {

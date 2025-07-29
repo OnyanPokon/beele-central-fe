@@ -8,7 +8,7 @@ import { Tenants as TenantsModel } from '@/models';
 import dateFormatter from '@/utils/dateFormatter';
 import { TenantsService } from '@/services';
 import { formFields } from './FormFields';
-import RegistransService from '@/services/RegistrantsService';
+import RegistrantsService from '@/services/RegistrantsService';
 import { GlobalOutlined } from '@ant-design/icons';
 
 const Tenants = () => {
@@ -16,7 +16,7 @@ const Tenants = () => {
   const modal = useCrudModal();
   const { success, error } = useNotification();
   const { execute, ...getAllTenants } = useService(TenantsService.getAll);
-  const { execute: executeRegistrants, ...getRegistrants } = useService(RegistransService.getAll);
+  const { execute: executeRegistrants, ...getRegistrants } = useService(RegistrantsService.getAll);
   const updateTenant = useService(TenantsService.update);
   const deleteTenant = useService(TenantsService.delete);
   const deleteBatchTenants = useService(TenantsService.deleteBatch);

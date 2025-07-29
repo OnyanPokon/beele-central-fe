@@ -14,7 +14,7 @@ export default class {{name}} {
    * */
   static async getAll({ token, ...filters }) {
     const params = Object.fromEntries(Object.entries(filters).filter(([_, value]) => value !== null && value !== undefined && value !== ''));
-    const response = await api.get('{{endpoint}}', {token});
+    const response = await api.get('{{endpoint}}', {token, params});
     if(!response.data) return response;
     return { ...response, data: {{model}}.fromApiData(response.data)};
   }

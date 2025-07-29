@@ -104,7 +104,7 @@ const Testimonials = () => {
                       let statusTag;
                       switch (record.status) {
                         case 'publikasi':
-                          statusTag = <Tag color="blue">Pulibkasi</Tag>;
+                          statusTag = <Tag color="blue">Publikasi</Tag>;
                           break;
                         case 'menunggu':
                           statusTag = <Tag color="warning">Menunggu</Tag>;
