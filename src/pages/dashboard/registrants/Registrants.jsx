@@ -9,6 +9,7 @@ import { DataTable, DataTableHeader } from '@/components';
 import { Registrants as RegistrantsModel } from '@/models';
 import dateFormatter from '@/utils/dateFormatter';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { InputType } from '@/constants';
 
 const Registrants = () => {
   const { token, user } = useAuth();
@@ -17,6 +18,7 @@ const Registrants = () => {
   const { execute, ...getAllRegistrants } = useService(RegistrantsService.getAll);
   const storeRegistrant = useService(RegistrantsService.store);
   const updateRegistrant = useService(RegistrantsService.update);
+  const changeStatusRegistrant = useService(RegistrantsService.changeStatus);
   const deleteRegistrant = useService(RegistrantsService.delete);
   const deleteBatchRegistrants = useService(RegistrantsService.deleteBatch);
   const [filterValues, setFilterValues] = useState({ search: '' });
@@ -85,9 +87,28 @@ const Registrants = () => {
               modal.edit({
                 title: `Edit ${Modul.REGISTRANTS}`,
                 data: record,
-                formFields: formFields(),
+                formFields: [
+                  ...formFields(),
+                  {
+                    label: `Nama Domain (Masukan nama domain toko yang anda inginkan)`,
+                    name: 'domain',
+                    type: InputType.TEXT,
+                    rules: [
+                      {
+                        required: true,
+                        message: `Nama Domain harus diisi`
+                      }
+                    ],
+                    size: 'large',
+                    extra: {
+                      addonBefore: 'http://',
+                      addonAfter: '.belee.id',
+                      className: 'domain'
+                    }
+                  }
+                ],
                 onSubmit: async (values) => {
-                  const { message, isSuccess } = await updateRegistrant.execute(record.id, { ...values, status: record.status }, token);
+                  const { message, isSuccess } = await updateRegistrant.execute(record.id, values, token);
                   if (isSuccess) {
                     success('Berhasil', message);
                     fetchRegistrants({ token: token, page: pagination.page, per_page: pagination.per_page });
@@ -168,10 +189,9 @@ const Registrants = () => {
                   title="Proses pendaftaran"
                   description="apakah anda yakin akan menerima pendaftaran?"
                   onConfirm={async () => {
-                    const { message: updateStatusMsg, isSuccess: updateStatusSuccess } = await updateRegistrant.execute(
+                    const { message: updateStatusMsg, isSuccess: updateStatusSuccess } = await changeStatusRegistrant.execute(
                       record.id,
                       {
-                        ...record,
                         status: 'diterima'
                       },
                       token
@@ -195,10 +215,9 @@ const Registrants = () => {
                   title="Tolak pendaftaran"
                   description="apakah anda yakin akan menolak pendaftaran?"
                   onConfirm={async () => {
-                    const { message: updateStatusMsg, isSuccess: updateStatusSuccess } = await updateRegistrant.execute(
+                    const { message: updateStatusMsg, isSuccess: updateStatusSuccess } = await changeStatusRegistrant.execute(
                       record.id,
                       {
-                        ...record,
                         status: 'ditolak'
                       },
                       token
@@ -248,7 +267,26 @@ const Registrants = () => {
   const onCreate = () => {
     modal.create({
       title: `Tambah ${Modul.REGISTRANTS}`,
-      formFields: formFields,
+      formFields: [
+        ...formFields(),
+        {
+          label: `Nama Domain (Masukan nama domain toko yang anda inginkan)`,
+          name: 'domain',
+          type: InputType.TEXT,
+          rules: [
+            {
+              required: true,
+              message: `Nama Domain harus diisi`
+            }
+          ],
+          size: 'large',
+          extra: {
+            addonBefore: 'http://',
+            addonAfter: '.belee.id',
+            className: 'domain'
+          }
+        }
+      ],
       onSubmit: async (values) => {
         const { message, isSuccess } = await storeRegistrant.execute({ ...values, status: 'menunggu' }, token);
         if (isSuccess) {

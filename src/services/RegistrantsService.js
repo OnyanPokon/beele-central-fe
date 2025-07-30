@@ -50,6 +50,21 @@ export default class RegistrantsService {
 
   /**
    * @param {number} id
+   * @param {Registrants} data
+   * @param {string} token
+   * @returns {Promise<{
+   *  code: HTTPStatusCode;
+   *  status: boolean;
+   *  message: string;
+   *  errors?: { [key: string]: string[] };
+   * }>}
+   */
+  static async changeStatus(id, data, token) {
+    return await api.patch(`/pendaftar/${id}`, { body: data, token });
+  }
+
+  /**
+   * @param {number} id
    * @param {string} token
    * @returns {Promise<{
    *  code: HTTPStatusCode;

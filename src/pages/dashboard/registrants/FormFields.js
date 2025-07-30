@@ -69,22 +69,5 @@ export const formFields = () => [
     extra: {
       className: 'email'
     }
-  },
-  {
-    label: `Nama Domain (Masukan nama domain toko yang anda inginkan)`,
-    name: 'domain',
-    type: InputType.TEXT,
-    rules: [
-      {
-        required: true,
-        message: `Nama Domain harus diisi`
-      }
-    ],
-    size: 'large',
-    extra: {
-      addonBefore: 'http://',
-      addonAfter: '.belee.id',
-      className: 'domain'
-    }
   }
 ];

@@ -18,7 +18,6 @@ interface FormValue {
   email: string;
   telp: string;
   domain: string;
-  status: 'diterima' | 'ditolak' | 'menunggu';
 }
 
 export interface OutgoingApiData {
@@ -27,7 +26,6 @@ export interface OutgoingApiData {
   email: string;
   telepon: string;
   domain: string;
-  status: 'diterima' | 'ditolak' | 'menunggu';
 }
 
 type ReturnType<S, From, To> = S extends From[] ? To[] : To;
@@ -59,8 +57,7 @@ export default class Registrants extends Model {
       nama_pemilik: registrant.owner_name,
       email: registrant.email,
       telepon: registrant.telp,
-      domain: registrant.domain,
-      status: registrant.status
+      domain: registrant.domain
     };
 
     return apiData as ReturnType<T, FormValue, OutgoingApiData>;

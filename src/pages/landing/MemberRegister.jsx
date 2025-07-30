@@ -1,10 +1,21 @@
-import { Avatar, Button, Card, Checkbox, FloatButton, Form, Tour, Typography } from 'antd';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+import { Avatar, Button, Card, Checkbox, FloatButton, Form, Input, Tour, Typography } from 'antd';
 import { formFields } from '../dashboard/registrants/FormFields';
 import { FormItem, Reveal } from '@/components';
-import { CheckCircleFilled, QuestionCircleOutlined, RightOutlined, WarningOutlined } from '@ant-design/icons';
-import React from 'react';
+import { CheckCircleFilled, ClockCircleFilled, CloseCircleFilled, QuestionCircleOutlined, RightOutlined, WarningOutlined } from '@ant-design/icons';
+import React, { useCallback } from 'react';
 import { useNotification, useService } from '@/hooks';
 import { LandingService } from '@/services';
+
+function debounce(func, delay) {
+  let timer;
+  return function (...args) {
+    const context = this;
+    clearTimeout(timer);
+    timer = setTimeout(() => func.apply(context, args), delay);
+  };
+}
 
 const MemberRegister = () => {
   const [step, setStep] = React.useState('form');
@@ -12,8 +23,14 @@ const MemberRegister = () => {
   const [values, setValues] = React.useState(null);
   const [form] = Form.useForm();
   const storeRegistrant = useService(LandingService.memberRegister);
+  const domainChecker = useService(LandingService.domainChecker);
   const { success, error } = useNotification();
   const [openTour, setOpenTour] = React.useState(false);
+  const [checking, setChecking] = React.useState(false);
+  const [available, setAvailable] = React.useState(null);
+  const [domainError, setDomainError] = React.useState(null);
+  const [domainValue, setDomainValue] = React.useState('');
+  const currentValue = React.useRef('');
 
   const handleNext = () => {
     form.validateFields().then(() => {
@@ -49,6 +66,44 @@ const MemberRegister = () => {
     return isSuccess;
   };
 
+  const checkDomain = useCallback(
+    debounce(async (value) => {
+      setChecking(true);
+      setDomainError(null);
+      setAvailable(null);
+      try {
+        const { message, isSuccess } = await domainChecker.execute({
+          domain: value
+        });
+        setAvailable(isSuccess);
+        if (!isSuccess) {
+          setDomainError(message || 'Domain tidak tersedia');
+        }
+      } catch (e) {
+        setDomainError('Terjadi kesalahan saat memeriksa domain');
+        setAvailable(false);
+      } finally {
+        setChecking(false);
+      }
+    }, 1000),
+    []
+  );
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setDomainValue(value);
+    currentValue.current = value;
+
+    if (value && value.length > 0) {
+      checkDomain(value);
+    } else {
+      setDomainError(null);
+      setAvailable(null);
+    }
+
+    form.setFieldsValue({ domain: value });
+  };
+
   return (
     <section
       className=""
@@ -78,6 +133,41 @@ const MemberRegister = () => {
               <Form form={form} layout="vertical" className="flex h-full flex-col justify-between p-6 lg:p-12">
                 <div className="body-form mb-4 flex flex-1 flex-col gap-y-4 overflow-y-auto">
                   <FormItem formFields={formFields()} />
+                  <Form.Item
+                    label="Nama Domain (Masukan nama domain toko yang anda inginkan)"
+                    name="domain"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Nama Domain harus diisi'
+                      },
+                      {
+                        validator(_, value) {
+                          if (domainError) {
+                            return Promise.reject(domainError);
+                          }
+                          return Promise.resolve();
+                        }
+                      }
+                    ]}
+                  >
+                    <Input placeholder="Masukan Nama Domain" size="large" addonBefore="http://" addonAfter=".belee.id" onChange={handleChange} value={domainValue} />
+                    {checking && (
+                      <small className="ms-1">
+                        <ClockCircleFilled className="text-warning-500" /> Sedang melakukan pengecek-kan domain...
+                      </small>
+                    )}
+                    {!checking && available === false && (
+                      <small className="ms-1">
+                        <CloseCircleFilled className="text-danger-500" /> Domain yang kamu inputkan tidak tersedia
+                      </small>
+                    )}
+                    {!checking && available === true && (
+                      <small className="ms-1">
+                        <CheckCircleFilled className="text-success-500" /> Domain tersedia!
+                      </small>
+                    )}
+                  </Form.Item>
                 </div>
                 <div className="flex flex-col gap-y-4">
                   <Card className="bg-primary-100/20">
@@ -88,7 +178,7 @@ const MemberRegister = () => {
                       </Avatar>
                     </div>
                   </Card>
-                  <Button size="large" variant="solid" color="primary" icon={<RightOutlined />} onClick={handleNext}>
+                  <Button size="large" disabled={available !== true} variant="solid" color="primary" icon={<RightOutlined />} onClick={handleNext}>
                     Berikutnya
                   </Button>
                 </div>
@@ -118,7 +208,7 @@ const MemberRegister = () => {
                 <Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)}>
                   Saya menyetujui syarat dan ketentuan
                 </Checkbox>
-                <Button disabled={!checked} size="large" variant="solid" color="primary" onClick={handleSubmit}>
+                <Button disabled={!checked} loading={storeRegistrant.isLoading} size="large" variant="solid" color="primary" onClick={handleSubmit}>
                   Proses
                 </Button>
                 <Button
@@ -127,6 +217,7 @@ const MemberRegister = () => {
                   onClick={() => {
                     setStep('form');
                     setValues(null);
+                    setDomainValue(null);
                   }}
                 >
                   Kembali

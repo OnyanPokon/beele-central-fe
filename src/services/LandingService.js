@@ -15,4 +15,8 @@ export default class LandingService {
   static async memberRegister(data) {
     return await api.post('/pendaftar/registrasi', { body: Registrants.toApiData(data) });
   }
+
+  static async domainChecker(data) {
+    return await api.post('/pendaftar/cek-domain', { body: data });
+  }
 }
