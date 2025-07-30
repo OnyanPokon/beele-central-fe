@@ -10,6 +10,8 @@ import { TenantsService } from '@/services';
 import { formFields } from './FormFields';
 import RegistrantsService from '@/services/RegistrantsService';
 import { GlobalOutlined } from '@ant-design/icons';
+import { InputType } from '@/constants';
+import dayjs from 'dayjs';
 
 const Tenants = () => {
   const { token, user } = useAuth();
@@ -91,10 +93,24 @@ const Tenants = () => {
             onClick={() => {
               modal.edit({
                 title: `Edit ${Modul.TENANT}`,
-                data: { ...record, registrant_id: record.registrant.id },
-                formFields: formFields({ options: { registrants } }),
+                data: { ...record, registrant_id: record.registrant.id, expired_date: dayjs(record.expired_date) },
+                formFields: [
+                  ...formFields({ options: { registrants } }),
+                  {
+                    label: `Tanggal Kadaluwarsa`,
+                    name: 'expired_date',
+                    type: InputType.DATE,
+                    rules: [
+                      {
+                        required: true,
+                        message: `Tanggal Kadaluwarsa harus diisi`
+                      }
+                    ],
+                    size: 'large'
+                  }
+                ],
                 onSubmit: async (values) => {
-                  const { message, isSuccess } = await updateTenant.execute(record.id, { ...values, expired_date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] }, token);
+                  const { message, isSuccess } = await updateTenant.execute(record.id, { ...values, expired_date: dateFormatter(values.expired_date) }, token);
                   if (isSuccess) {
                     success('Berhasil', message);
                     fetchTenants({ token: token, page: pagination.page, per_page: pagination.per_page });
