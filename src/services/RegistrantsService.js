@@ -60,7 +60,7 @@ export default class RegistrantsService {
    * }>}
    */
   static async changeStatus(id, data, token) {
-    return await api.patch(`/pendaftar/${id}`, { body: data, token });
+    return await api.patch(`/pendaftar/verifikasi/${id}`, { body: data, token });
   }
 
   /**
