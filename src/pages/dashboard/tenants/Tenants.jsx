@@ -10,8 +10,10 @@ import { TenantsService } from '@/services';
 import { formFields } from './FormFields';
 import RegistrantsService from '@/services/RegistrantsService';
 import { GlobalOutlined } from '@ant-design/icons';
-import { InputType } from '@/constants';
+import { Action, InputType } from '@/constants';
 import dayjs from 'dayjs';
+
+const { UPDATE, DELETE, READ } = Action;
 
 const Tenants = () => {
   const { token, user } = useAuth();
@@ -82,7 +84,7 @@ const Tenants = () => {
     }
   ];
 
-  if (user) {
+  if (user && user.eitherCan([UPDATE, TenantsModel], [DELETE, TenantsModel], [READ, TenantsModel])) {
     column.push({
       title: 'Aksi',
       render: (_, record) => (

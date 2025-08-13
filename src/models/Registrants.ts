@@ -63,3 +63,5 @@ export default class Registrants extends Model {
     return apiData as ReturnType<T, FormValue, OutgoingApiData>;
   }
 }
+
+Model.children.pendaftaran = Registrants;

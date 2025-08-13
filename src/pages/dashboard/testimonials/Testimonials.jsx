@@ -7,6 +7,9 @@ import { DataTable, DataTableHeader } from '@/components';
 import { Testimonial as TestimonialsModel } from '@/models';
 import { TestimonialService } from '@/services';
 import { additionalField, formFields } from './FormFields';
+import { Action } from '@/constants';
+
+const { UPDATE, DELETE, READ } = Action;
 
 const Testimonials = () => {
   const { token, user } = useAuth();
@@ -75,7 +78,7 @@ const Testimonials = () => {
     }
   ];
 
-  if (user) {
+  if (user && user.eitherCan([UPDATE, TestimonialsModel], [DELETE, TestimonialsModel], [READ, TestimonialsModel])) {
     column.push({
       title: 'Aksi',
       render: (_, record) => (

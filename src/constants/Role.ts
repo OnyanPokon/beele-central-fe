@@ -1,6 +1,6 @@
 enum Role {
   ADMIN = 'admin',
-  PEGAWAI = 'pegawai'
+  KARYAWAN = 'karyawan'
 }
 
 export default Role;

@@ -9,7 +9,9 @@ import { DataTable, DataTableHeader } from '@/components';
 import { Registrants as RegistrantsModel } from '@/models';
 import dateFormatter from '@/utils/dateFormatter';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { InputType } from '@/constants';
+import { Action, InputType } from '@/constants';
+
+const { UPDATE, DELETE, READ } = Action;
 
 const Registrants = () => {
   const { token, user } = useAuth();
@@ -75,7 +77,7 @@ const Registrants = () => {
     }
   ];
 
-  if (user) {
+  if (user && user.eitherCan([UPDATE, RegistrantsModel], [DELETE, RegistrantsModel], [READ, RegistrantsModel])) {
     column.push({
       title: 'Aksi',
       render: (_, record) => (

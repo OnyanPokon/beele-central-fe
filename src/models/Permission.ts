@@ -23,7 +23,7 @@ export default class Permission extends Model {
   }
 
   private static actions = {
-    manajemen: [Action.READ, Action.UPDATE, Action.DELETE, Action.CREATE]
+    kelola: [Action.READ, Action.UPDATE, Action.DELETE, Action.CREATE]
   };
 
   static fromApiData<T extends ApiData | ApiData[]>(apiData: T): ReturnType<T, ApiData, Permission> {
@@ -66,4 +66,4 @@ export default class Permission extends Model {
   }
 }
 
-// Model.children.permission = Permission;
+Model.children.permission = Permission;

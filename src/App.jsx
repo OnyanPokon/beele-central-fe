@@ -6,9 +6,12 @@ import './index.css';
 import { flattenLandingLinks } from './utils/landingLink';
 import { Notfound } from './pages/result';
 import { ScrollToTop } from './components';
+import { Result } from 'antd';
+import { useAuth } from './hooks';
 
 function App() {
   const flatLandingLinks = flattenLandingLinks(landingLink);
+  const { user } = useAuth();
 
   return (
     <RouterProvider
@@ -34,7 +37,18 @@ function App() {
           element: <DashboardLayout />,
           children: [
             ...dashboardLink.flatMap(({ children }) =>
-              children.map(({ path, element: Element }) => {
+              children.map(({ permissions, roles, path, element: Element }) => {
+                const hasPermissions = permissions && permissions.length > 0;
+                const hasRoles = roles && roles.length > 0;
+                const userCantDoAnyOfThat = hasPermissions && (!user || user.cantDoAny(...permissions));
+                const userIsNotInAnyOfThatRole = hasRoles && (!user || !roles.some((role) => user.is(role)));
+
+                if (userCantDoAnyOfThat && userIsNotInAnyOfThatRole) {
+                  return {
+                    path,
+                    element: <Result status="403" subTitle="Anda tidak memiliki akses ke halaman ini" title="Forbidden" />
+                  };
+                }
                 return {
                   path,
                   element: <Element />

@@ -57,3 +57,5 @@ export default class Testimonial extends Model {
     return apiData as ReturnType<T, FormValue, OutgoingApiData>;
   }
 }
+
+Model.children.testimoni = Testimonial;

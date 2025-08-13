@@ -90,3 +90,5 @@ export default class Tenants extends Model {
     return apiData as ReturnType<T, FormValue, OutgoingApiData>;
   }
 }
+
+Model.children.tenant = Tenants;

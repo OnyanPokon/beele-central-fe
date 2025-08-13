@@ -1,7 +1,9 @@
+import { Action } from '@/constants';
+import * as Model from '@/models';
 import * as Auth from '@/pages/auth';
 import * as Dashboard from '@/pages/dashboard';
 import * as Landing from '@/pages/landing';
-import { DashboardOutlined, DatabaseOutlined } from '@ant-design/icons';
+import { DatabaseOutlined, HomeOutlined } from '@ant-design/icons';
 
 export const landingLink = [
   {
@@ -33,17 +35,40 @@ export const landingLink = [
  */
 export const dashboardLink = [
   {
-    label: 'Overview',
-    icon: DashboardOutlined,
-    children: [{ path: '/dashboard', label: 'Dashboard', element: Dashboard.Dashboard }]
+    label: 'Belee',
+    icon: HomeOutlined,
+    children: [
+      { path: '/dashboard', label: 'Dashboard', element: Dashboard.Dashboard },
+      {
+        path: '/dashboard/karyawan',
+        label: 'Karyawan',
+        element: Dashboard.Employees,
+        permissions: [[Action.READ, Model.Employees]]
+      }
+    ]
   },
   {
     label: 'Tenants',
     icon: DatabaseOutlined,
     children: [
-      { path: '/dashboard/pendaftar', label: 'Pendaftar', element: Dashboard.Registrants },
-      { path: '/dashboard/tenant', label: 'Tenant', element: Dashboard.Tenants },
-      { path: '/dashboard/testimoni', label: 'Testimoni', element: Dashboard.Testimonials }
+      {
+        path: '/dashboard/pendaftar',
+        label: 'Pendaftar',
+        element: Dashboard.Registrants,
+        permissions: [[Action.READ, Model.Registrants]]
+      },
+      {
+        path: '/dashboard/tenant',
+        label: 'Tenant',
+        element: Dashboard.Tenants,
+        permissions: [[Action.READ, Model.Tenants]]
+      },
+      {
+        path: '/dashboard/testimoni',
+        label: 'Testimoni',
+        element: Dashboard.Testimonials,
+        permissions: [[Action.READ, Model.Testimonial]]
+      }
     ]
   }
 ].map((item) => ({

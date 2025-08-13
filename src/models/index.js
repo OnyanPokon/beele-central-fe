@@ -4,3 +4,4 @@ export { default as Model } from './Model';
 export { default as Registrants } from './Registrants';
 export { default as Tenants } from './Tenants';
 export { default as Testimonial } from './Testimonial';
+export { default as Employees } from './Employees';
