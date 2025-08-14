@@ -1,4 +1,4 @@
-import { Footer, Navbar } from '@/components';
+import { Footer, Navbar, ScrollToTop } from '@/components';
 import { Outlet } from 'react-router-dom';
 
 const Landing = () => {
@@ -7,6 +7,7 @@ const Landing = () => {
       <Navbar />
 
       <main className="flex-auto bg-white">
+        <ScrollToTop />
         <Outlet />
         <Footer />
       </main>

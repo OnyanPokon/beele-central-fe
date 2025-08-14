@@ -3,13 +3,18 @@ import * as Model from '@/models';
 import * as Auth from '@/pages/auth';
 import * as Dashboard from '@/pages/dashboard';
 import * as Landing from '@/pages/landing';
-import { DatabaseOutlined, HomeOutlined } from '@ant-design/icons';
+import { DatabaseOutlined, FileTextOutlined, HomeOutlined } from '@ant-design/icons';
 
 export const landingLink = [
   {
     label: 'Beranda',
     key: '/',
     element: Landing.Home
+  },
+  {
+    label: 'Berita UMKM',
+    key: '/berita_umkm',
+    element: Landing.News
   },
   {
     label: 'Daftar Sebagai Mitra',
@@ -68,6 +73,18 @@ export const dashboardLink = [
         label: 'Testimoni',
         element: Dashboard.Testimonials,
         permissions: [[Action.READ, Model.Testimonial]]
+      }
+    ]
+  },
+  {
+    label: 'Berita',
+    icon: FileTextOutlined,
+    children: [
+      {
+        path: '/dashboard/news',
+        label: 'Berita UMKM',
+        element: Dashboard.News,
+        permissions: [[Action.READ, Model.News]]
       }
     ]
   }

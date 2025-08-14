@@ -5,9 +5,10 @@ import { RouterProvider } from 'react-router';
 import './index.css';
 import { flattenLandingLinks } from './utils/landingLink';
 import { Notfound } from './pages/result';
-import { ScrollToTop } from './components';
 import { Result } from 'antd';
 import { useAuth } from './hooks';
+import { CreateNews, EditNews } from './pages/dashboard';
+import { ReadNews } from './pages/landing';
 
 function App() {
   const flatLandingLinks = flattenLandingLinks(landingLink);
@@ -22,14 +23,9 @@ function App() {
             // Tambahkan route dari landingLink
             ...flatLandingLinks.map(({ path, element: Element }) => ({
               path,
-              element: (
-                <>
-                  <Element />
-                  <ScrollToTop />
-                </>
-              )
+              element: <Element />
             })),
-
+            { path: '/berita_umkm/:slug', element: <ReadNews /> },
             { path: '*', element: <Notfound /> }
           ]
         },
@@ -54,7 +50,9 @@ function App() {
                   element: <Element />
                 };
               })
-            )
+            ),
+            { path: '/dashboard/news/create', element: <CreateNews /> },
+            { path: '/dashboard/news/edit/:slug', element: <EditNews /> }
           ]
         },
         {

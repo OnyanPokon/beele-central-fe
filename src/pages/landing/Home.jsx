@@ -1,13 +1,33 @@
 import { Reveal } from '@/components';
-import { CheckCircleFilled, ShopOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { Avatar, Button, Card, Typography } from 'antd';
+import { usePagination, useService } from '@/hooks';
+import { NewsService } from '@/services';
+import dateFormatter from '@/utils/dateFormatter';
+import timeAgo from '@/utils/timeAgo';
+import { CheckCircleFilled, ClockCircleOutlined, RightOutlined, ShopOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { Avatar, Button, Card, Skeleton, Tag, Typography } from 'antd';
 import gsap from 'gsap';
-import { useLayoutEffect, useRef } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import parse from 'html-react-parser';
+import getInitials from '@/utils/getInitials';
 
 const Home = () => {
+  const { execute: executeNews, ...getAllNews } = useService(NewsService.getAll);
+  const pagination = usePagination({ totalData: getAllNews.totalData });
   const cardsWrapperRef = useRef(null);
   const navigate = useNavigate();
+
+  const fetchNews = useCallback(() => {
+    executeNews({
+      page: pagination.page,
+      per_page: pagination.per_page,
+      search: ''
+    });
+  }, [executeNews, pagination.page, pagination.per_page]);
+
+  useEffect(() => {
+    fetchNews();
+  }, [fetchNews]);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -35,6 +55,8 @@ const Home = () => {
 
     return () => ctx.revert();
   }, []);
+
+  const news = getAllNews.data ?? [];
 
   return (
     <>
@@ -102,39 +124,17 @@ const Home = () => {
       </section>
       <section className="mx-auto flex w-full max-w-screen-xl flex-col gap-y-10 px-6 py-32">
         <div className="">
-          <Typography.Title level={3} style={{ color: '#142b71' }}>
-            <Reveal>Bagaimana pendapat orang tentang Belee?</Reveal>
+          <Typography.Title level={3}>
+            <Reveal>Bagaimana pendapat orang?</Reveal>
           </Typography.Title>
         </div>
         <div className="grid grid-cols-6 gap-4 gap-y-8">
           <Card className="relative col-span-6 bg-gray-100/50 lg:col-span-2">
             <div className="mt-4 flex flex-col gap-y-2">
-              <Typography.Title level={5} style={{ color: '#142b71' }}>
+              <Typography.Title level={5} style={{ color: '#4172ab' }}>
                 <Reveal>Mohamad Rafiq Daud (Owner of UMKM GO)</Reveal>
               </Typography.Title>
-              <p className="text-secondary-200">
-                <Reveal>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Reveal>
-              </p>
-            </div>
-            <Avatar src="/image_asset/figure/user.png" className="absolute -top-4 left-6 border border-gray-200" size="large" style={{ backgroundColor: '#fff', color: '#396396' }} />
-          </Card>
-          <Card className="relative col-span-6 bg-gray-100/50 lg:col-span-2">
-            <div className="mt-4 flex flex-col gap-y-2">
-              <Typography.Title level={5} style={{ color: '#142b71' }}>
-                <Reveal>Mohamad Rafiq Daud (Owner of UMKM GO)</Reveal>
-              </Typography.Title>
-              <p className="text-secondary-200">
-                <Reveal>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Reveal>
-              </p>
-            </div>
-            <Avatar src="/image_asset/figure/user.png" className="absolute -top-4 left-6 border border-gray-200" size="large" style={{ backgroundColor: '#fff', color: '#396396' }} />
-          </Card>
-          <Card className="relative col-span-6 bg-gray-100/50 lg:col-span-2">
-            <div className="mt-4 flex flex-col gap-y-2">
-              <Typography.Title level={5} style={{ color: '#142b71' }}>
-                <Reveal>Mohamad Rafiq Daud (Owner of UMKM GO)</Reveal>
-              </Typography.Title>
-              <p className="text-secondary-200">
+              <p>
                 <Reveal>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Reveal>
               </p>
             </div>
@@ -174,6 +174,56 @@ const Home = () => {
               <Button className="mt-4 w-fit">Daftar Sebagai Mitra</Button>
             </div>
           </Card>
+        </div>
+      </section>
+      <section className="mx-auto flex w-full max-w-screen-xl gap-x-10 px-6 pb-32 pt-12">
+        <div className="flex w-full flex-[1] flex-col gap-y-1 pt-6">
+          <Typography.Title level={3}>
+            <Reveal>Berita UMKM Terbaru</Reveal>
+          </Typography.Title>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <Button className="mt-4 w-fit" variant="solid" color="primary" onClick={() => navigate('/berita_umkm')}>
+            Lihat Berita Lainnya
+          </Button>
+        </div>
+        <div className="flex w-full flex-[1] flex-col divide-y">
+          {getAllNews.isLoading ? (
+            <>
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div className="flex flex-col gap-y-2 py-6" key={index}>
+                  <Skeleton active />
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              {news.slice(0, 3).map((item) => (
+                <div key={item.id} className="flex flex-col gap-y-2 py-6">
+                  <div className="inline-flex items-center justify-between">
+                    <Tag icon={<ClockCircleOutlined />} color="blue">
+                      {dateFormatter(item.created_at)}
+                    </Tag>
+                    <small className="text-gray-400">{timeAgo(item.created_at)}</small>
+                  </div>
+                  <Typography.Title level={4} style={{ color: '#4172ab' }}>
+                    <Reveal> {item.title}</Reveal>
+                  </Typography.Title>
+                  <p className="news-text text-sm">{parse(item.content)}</p>
+                  <div className="mt-2 inline-flex items-center justify-between">
+                    <div className="inline-flex items-center gap-x-2 text-xs">
+                      <Avatar style={{ backgroundColor: '#ECF7FD', color: '#518ed6' }} size="small">
+                        {getInitials(item.user.name)}
+                      </Avatar>
+                      {item.user.name}
+                    </div>
+                    <Button onClick={() => navigate('/berita_umkm/' + item.slug)} variant="link" color="primary" icon={<RightOutlined />} iconPosition="end" size="small" className="text-xs">
+                      Selengkapnya
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
         </div>
       </section>
     </>

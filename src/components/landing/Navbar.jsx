@@ -4,13 +4,15 @@ import { MenuOutlined } from '@ant-design/icons';
 import { Button, Drawer, Grid, Image, Menu, Skeleton } from 'antd';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const breakpoints = Grid.useBreakpoint();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+  const forceScrolled = location.pathname.startsWith('/berita_umkm/');
 
   const openDrawer = () => {
     setIsDrawerOpen(true);
@@ -28,13 +30,18 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    if (forceScrolled) {
+      setIsScrolled(true);
+      return;
+    }
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [forceScrolled]);
 
   const loadingData = false;
 
