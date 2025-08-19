@@ -28,8 +28,8 @@ export default class NewsService {
    *  data?: News;
    * }>}
    * */
-  static async getBySlug(slug) {
-    const response = await api.get(`/berita/${slug}`);
+  static async getBySlug({ slug, token }) {
+    const response = await api.get(`/berita/${slug}`, token ? { token } : {});
     if (!response.data) return response;
     return { ...response, data: News.fromApiData(response.data) };
   }

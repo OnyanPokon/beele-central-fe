@@ -24,7 +24,7 @@ const ReadNews = () => {
 
   useEffect(() => {
     fetchNews();
-    fetchNewsDetail(slug);
+    fetchNewsDetail({ slug: slug });
   }, [fetchNews, fetchNewsDetail, slug]);
 
   const news = getAllNews.data ?? [];

@@ -4,6 +4,7 @@ import { EyeInvisibleOutlined, EyeOutlined, LockOutlined } from '@ant-design/ico
 import { Button, Card, Form, Input, Result } from 'antd';
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Notfound } from '../result';
 
 const ForgotPassword = () => {
   const resetPassword = useService(AuthService.resetPassword);
@@ -11,8 +12,6 @@ const ForgotPassword = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
   const navigate = useNavigate();
-
-  console.log(token);
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const onFinish = async (values) => {
@@ -28,6 +27,11 @@ const ForgotPassword = () => {
     }
     return isSuccess;
   };
+
+  if (!token) {
+    return <Notfound />;
+  }
+
   return (
     <Card className="w-full max-w-md px-4">
       <div className="mb-5 mt-4 flex w-full flex-col items-center justify-center gap-y-2">

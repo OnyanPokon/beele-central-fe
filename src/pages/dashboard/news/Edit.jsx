@@ -20,7 +20,7 @@ const Edit = () => {
   const updateArticle = useService(NewsService.update);
 
   useEffect(() => {
-    fetchArticle(slug);
+    fetchArticle({ slug: slug, token: token });
   }, [fetchArticle, slug, token]);
 
   const initialData = useMemo(() => {
