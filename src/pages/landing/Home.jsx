@@ -7,7 +7,7 @@ import { CheckCircleFilled, ClockCircleOutlined, RightOutlined, ShopOutlined, Sh
 import { Avatar, Button, Card, Carousel, Rate, Skeleton, Tag, Typography } from 'antd';
 import gsap from 'gsap';
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import parse from 'html-react-parser';
 import getInitials from '@/utils/getInitials';
 
@@ -107,7 +107,7 @@ const Home = () => {
               </div>
               <div className="animated-card absolute -right-4 top-36 max-w-56">
                 <div className="relative rounded-xl border-2 border-gray-100/30 bg-white/20 pb-8 pl-6 pr-5 pt-6 backdrop-blur-lg">
-                  <p className="text-sm font-semibold leading-snug text-white">Biarkan asisten virtual AI melayani pertanyaan dan pesanan pelanggan Anda.</p>
+                  <p className="text-sm font-semibold leading-snug text-white">Personalisasi Tampilan Website Usaha Sesuai Identitas Brand Anda.</p>
                   <Avatar className="absolute -right-4 -top-4" style={{ backgroundColor: '#fff', color: '#6ac662' }} size="large">
                     <CheckCircleFilled />
                   </Avatar>
@@ -163,7 +163,6 @@ const Home = () => {
               <p className="max-w-lg text-xs">
                 <Reveal color="#fff">Proses pendaftaran hanya beberapa menit. Dapatkan akses instan ke dashboard Anda dan mulai bangun wajah baru bisnis Anda sekarang juga.</Reveal>
               </p>
-
               <Button onClick={() => navigate('/member_register')} className="mt-4 w-fit">
                 Daftar Sebagai Mitra
               </Button>
@@ -173,9 +172,9 @@ const Home = () => {
         <hr className="mb-12" />
         <div className="flex flex-col items-center gap-y-2">
           <Typography.Title level={4} style={{ textAlign: 'center' }}>
-            Bagaimana pendapat orang?
+            Pengalaman Pengguna Kami
           </Typography.Title>
-          <p className="max-w-lg text-center text-xs md:text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p className="max-w-lg text-center text-xs md:text-base">Dengarkan langsung dari para pelaku UMKM yang telah merasakan kemudahan dan manfaat dalam mengelola bisnis digital mereka bersama kami.</p>
         </div>
         <Carousel autoplay autoplaySpeed={1000} className="">
           {getAllTestimonials.isLoading ? (
@@ -213,7 +212,7 @@ const Home = () => {
           <Typography.Title level={3}>
             <Reveal>Berita UMKM Terbaru</Reveal>
           </Typography.Title>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p>Ikuti berita terkini seputar inovasi, dapatkan tips bisnis, dan simak kisah inspiratif dalam kumpulan berita UMKM pilihan kami.</p>
           <Button className="mt-4 w-fit" variant="solid" color="primary" onClick={() => navigate('/berita_umkm')}>
             Lihat Berita Lainnya
           </Button>
@@ -237,8 +236,12 @@ const Home = () => {
                     </Tag>
                     <small className="text-gray-400">{timeAgo(item.created_at)}</small>
                   </div>
-                  <Typography.Title level={4} style={{ color: '#4172ab' }}>
-                    <Reveal> {item.title}</Reveal>
+                  <Typography.Title level={4}>
+                    <Reveal>
+                      <Link to={'/berita_umkm/' + item.slug} className="hover:underline">
+                        {item.title}
+                      </Link>
+                    </Reveal>
                   </Typography.Title>
                   <p className="news-text text-sm">{parse(item.content)}</p>
                   <div className="mt-2 inline-flex items-center justify-between">

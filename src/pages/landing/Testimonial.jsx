@@ -107,7 +107,7 @@ const Testimonial = () => {
 
             <Form.Item>
               <Button loading={sendTestimonial.isLoading} block type="primary" size="large" htmlType="submit">
-                Masuk
+                Kirim Testimoni
               </Button>
             </Form.Item>
           </Form>

@@ -12,16 +12,17 @@ import getInitials from '@/utils/getInitials';
 const News = () => {
   const { execute, ...getAllNews } = useService(NewsService.getAll);
   const pagination = usePagination({ totalData: getAllNews.totalData });
-  const [filterValues, setFilterValues] = useState({ search: '' });
+  const [filterValues, setFilterValues] = useState({ search: '', tipe: 'terbaru' });
   const navigate = useNavigate();
 
   const fetchNews = useCallback(() => {
     execute({
       page: pagination.page,
       per_page: pagination.per_page,
-      search: filterValues.search
+      search: filterValues.search,
+      tipe: filterValues.tipe
     });
-  }, [execute, filterValues.search, pagination.page, pagination.per_page]);
+  }, [execute, filterValues.search, filterValues.tipe, pagination.page, pagination.per_page]);
 
   useEffect(() => {
     fetchNews();
@@ -36,12 +37,14 @@ const News = () => {
           <Typography.Title level={2} style={{ color: '#fff', textAlign: 'center' }}>
             <Reveal color="#fff">Berita UMKM,</Reveal>
           </Typography.Title>
-          <p className="max-w-md text-center text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore </p>
+          <p className="max-w-2xl text-center text-white">Dengarkan langsung dari para pelaku UMKM yang telah merasakan kemudahan dan manfaat dalam mengelola bisnis digital mereka bersama kami. </p>
         </div>
         <div className="mb-12 flex w-full flex-col items-center justify-between gap-x-80 gap-y-4 md:flex-row">
           <Input.Search size="large" className="w-full" placeholder="Cari topik berita" onSearch={(values) => setFilterValues({ ...filterValues, search: values })} />
-          <Select size="large" className="w-full md:max-w-52" placeholder="Filter">
-            <Select.Option>Terbaru</Select.Option>
+          <Select size="large" className="w-full md:max-w-52" placeholder="Filter" value={filterValues.tipe} onChange={(value) => setFilterValues((prev) => ({ ...prev, tipe: value }))}>
+            <Select.Option value="rekomendasi">Rekomendasi</Select.Option>
+            <Select.Option value="trending">Trending</Select.Option>
+            <Select.Option value="terbaru">Terbaru</Select.Option>
           </Select>
         </div>
         <div className="mb-12 grid w-full grid-cols-4 gap-6">

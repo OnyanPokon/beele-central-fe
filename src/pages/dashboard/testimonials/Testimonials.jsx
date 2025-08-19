@@ -7,7 +7,8 @@ import { DataTable, DataTableHeader } from '@/components';
 import { Testimonial as TestimonialsModel } from '@/models';
 import { TestimonialService } from '@/services';
 import { Action, InputType } from '@/constants';
-import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
+import { CheckOutlined, CopyOutlined, EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
+import { copyToClipboard } from '@/utils/clipBoard';
 
 const { UPDATE, DELETE, READ } = Action;
 
@@ -20,6 +21,7 @@ const Testimonials = () => {
   const verificateTestimonial = useService(TestimonialService.verificate);
   const deleteBatchTestimonials = useService(TestimonialService.deleteBatch);
   const [filterValues, setFilterValues] = useState({ search: '' });
+  const [copied, setCopied] = useState(false);
 
   const pagination = usePagination({ totalData: getAllTestimonials.totalData });
 
@@ -261,9 +263,22 @@ const Testimonials = () => {
     });
   };
 
+  const handleCopy = async () => {
+    const success = await copyToClipboard(window.location.host + '/testimonial');
+
+    if (success) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
   return (
     <Card>
-      <DataTableHeader modul={Modul.TESTIMONIAL} onDeleteBatch={onDeleteBatch} selectedData={selectedTestimonials} onSearch={(values) => setFilterValues({ search: values })} />
+      <DataTableHeader modul={Modul.TESTIMONIAL} onDeleteBatch={onDeleteBatch} selectedData={selectedTestimonials} onSearch={(values) => setFilterValues({ search: values })}>
+        <Button icon={copied ? <CheckOutlined /> : <CopyOutlined />} onClick={handleCopy}>
+          {copied ? 'Tersalin!' : 'Salin Tautan Testimoni'}
+        </Button>
+      </DataTableHeader>
       <div className="w-full max-w-full overflow-x-auto">
         <DataTable
           data={testimonials}
