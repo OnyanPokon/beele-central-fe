@@ -116,9 +116,9 @@ const MemberRegister = () => {
       <div className="mx-auto flex min-h-screen w-full max-w-screen-md flex-col items-center justify-center px-6 py-28">
         <div className="my-12 flex flex-col items-center justify-center gap-y-2">
           <Typography.Title level={2} style={{ color: '#fff', textAlign: 'center' }}>
-            <Reveal color="#fff">Lorem ipsum dolor sit amet,</Reveal>
+            <Reveal color="#fff">Satu Langkah Lagi Menuju Bisnis Digital Anda!</Reveal>
           </Typography.Title>
-          <p className="max-w-md text-center text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore </p>
+          <p className="max-w-md text-center text-white">Informasi ini akan kami gunakan untuk membangun profil dan website profesional untuk usaha Anda.</p>
         </div>
         <div
           style={{
@@ -172,7 +172,7 @@ const MemberRegister = () => {
                 <div className="flex flex-col gap-y-4">
                   <Card className="bg-primary-100/20">
                     <div className="relative">
-                      <p className="text-secondary-500">mohon pastikan seluruh data yang Anda isi sudah benar dan lengkap. Kesalahan data dapat menghambat proses pendaftaran dan verifikasi UMKM Anda.</p>
+                      <p className="text-secondary-500">Periksa kembali data Anda. Informasi yang akurat akan mempercepat proses verifikasi dan pembuatan website Anda</p>
                       <Avatar className="absolute -top-11 right-0" style={{ backgroundColor: '#142b71', color: '#fff' }} size="large">
                         <WarningOutlined />
                       </Avatar>
@@ -193,14 +193,45 @@ const MemberRegister = () => {
                   <div className="flex items-start gap-x-4 text-primary-800">
                     <CheckCircleFilled className="mt-1 text-success-500" />
                     <p className="text-justify text-sm">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                      dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                      incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet,
-                      consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
-                      ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                      magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                      Dengan mendaftar dan menggunakan layanan Platform Belee (&quot;Layanan&quot;), Anda menyatakan telah membaca, mengerti, dan setuju untuk terikat sepenuhnya oleh Syarat dan Ketentuan yang berlaku. Layanan kami merupakan platform
+                      digital yang dirancang untuk membantu Pelaku Usaha Mikro, Kecil, dan Menengah (UMKM) dalam membangun identitas usaha online melalui pembuatan situs web (website) otomatis dan alat manajemen bisnis terpadu.
                     </p>
+                  </div>
+                  <div className="flex items-start gap-x-4 text-primary-800">
+                    <CheckCircleFilled className="mt-1 text-success-500" />
+                    <p className="text-justify text-sm">
+                      Layanan kami merupakan platform digital yang dirancang untuk membantu Pelaku Usaha Mikro, Kecil, dan Menengah (UMKM) dalam membangun identitas usaha online melalui pembuatan situs web (website) otomatis dan alat manajemen bisnis
+                      terpadu.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-x-4 text-primary-800">
+                    <CheckCircleFilled className="mt-1 text-success-500" />
+                    <p className="text-justify text-sm">
+                      Sebagai pengguna, Anda wajib memberikan informasi pendaftaran yang akurat, terkini, dan lengkap serta bertanggung jawab penuh atas segala aktivitas yang terjadi pada akun Anda, termasuk menjaga kerahasiaan kata sandi
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-x-4 text-primary-800">
+                    <CheckCircleFilled className="mt-1 text-success-500" />
+                    <p className="text-justify text-sm">
+                      Seluruh materi dan informasi, termasuk namun tidak terbatas pada foto produk, deskripsi, dan harga (&quot;Konten Pengguna&quot;) yang Anda unggah ke dalam Layanan adalah milik dan tanggung jawab Anda sepenuhnya.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-x-4 text-primary-800">
+                    <CheckCircleFilled className="mt-1 text-success-500" />
+                    <p className="text-justify text-sm">
+                      Anda setuju untuk menggunakan Layanan hanya untuk tujuan yang sah sesuai hukum yang berlaku di Republik Indonesia dan dilarang keras menggunakan platform untuk tindakan penipuan, penyebaran konten ilegal, atau aktivitas lain
+                      yang merugikan pihak ketiga dan Platform Belee.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-x-4 text-primary-800">
+                    <CheckCircleFilled className="mt-1 text-success-500" />
+                    <p className="text-justify text-sm">
+                      Perlu dipahami bahwa Platform Belee bertindak sebagai penyedia teknologi dan tidak bertanggung jawab atas segala bentuk transaksi, interaksi, maupun sengketa yang terjadi antara Anda dengan pelanggan Anda.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-x-4 text-primary-800">
+                    <CheckCircleFilled className="mt-1 text-success-500" />
+                    <p className="text-justify text-sm">Syarat dan Ketentuan ini dapat kami ubah atau perbarui dari waktu ke waktu, dan perubahan tersebut akan kami informasikan kepada Anda melalui pemberitahuan yang wajar</p>
                   </div>
                 </div>
               </div>
