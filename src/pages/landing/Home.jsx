@@ -69,14 +69,12 @@ const Home = () => {
         }}
       >
         <div className="mx-auto flex min-h-screen w-full max-w-screen-xl items-center justify-center gap-x-10 px-6 py-28">
-          <div className="flex flex-[1] flex-col gap-y-2">
+          <div className="flex flex-[1] flex-col">
             <Typography.Title style={{ color: '#fff' }}>
-              <Reveal color="#fff">Lorem ipsum dolor sit amet,</Reveal>
-              <Reveal color="#fff">consectetur adipiscing elit,</Reveal>
+              <Reveal color="#fff">Wajah Baru Bisnis Anda, Siap dalam 5 Menit.</Reveal>
             </Typography.Title>
-            <p className="text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <Button className="mt-12 w-fit" size="large" onClick={() => navigate('/member_register')}>
-              Daftar sekarang
+            <Button className="mt-6 w-fit" size="large" onClick={() => navigate('/member_register')}>
+              Jelajahi Belee Lebih Lanjut!
             </Button>
           </div>
           <div className="hidden flex-[1] lg:block"></div>
@@ -88,7 +86,7 @@ const Home = () => {
               <img src="/image_asset/figure/man_women.png" />
               <div className="animated-card absolute -left-24 bottom-48 max-w-56">
                 <div className="relative rounded-xl border-2 border-gray-100/30 bg-white/20 pb-8 pl-6 pr-5 pt-6 backdrop-blur-lg">
-                  <p className="text-sm font-semibold leading-snug text-white">Lorem ipsum dolor sit amet constructur adipesating elit, sed</p>
+                  <p className="text-sm font-semibold leading-snug text-white">Biarkan asisten virtual AI melayani pertanyaan dan pesanan pelanggan Anda.</p>
                   <Avatar className="absolute -left-4 -top-4" style={{ backgroundColor: '#fff', color: '#6ac662' }} size="large">
                     <CheckCircleFilled />
                   </Avatar>
@@ -97,7 +95,7 @@ const Home = () => {
               </div>
               <div className="animated-card absolute -right-4 top-36 max-w-56">
                 <div className="relative rounded-xl border-2 border-gray-100/30 bg-white/20 pb-8 pl-6 pr-5 pt-6 backdrop-blur-lg">
-                  <p className="text-sm font-semibold leading-snug text-white">Lorem ipsum dolor sit amet constructur adipesating elit, sed</p>
+                  <p className="text-sm font-semibold leading-snug text-white">Biarkan asisten virtual AI melayani pertanyaan dan pesanan pelanggan Anda.</p>
                   <Avatar className="absolute -right-4 -top-4" style={{ backgroundColor: '#fff', color: '#6ac662' }} size="large">
                     <CheckCircleFilled />
                   </Avatar>
@@ -145,12 +143,13 @@ const Home = () => {
         <div className="grid grid-cols-6 gap-4">
           <Card className="col-span-6 bg-gray-100/50 lg:col-span-2">
             <Typography.Title level={5}>
-              <Reveal>Belee In Your Bussiness</Reveal>
+              <Reveal>Lebih dari Platform, </Reveal>
+              <Reveal>Kami Mitra Pertumbuhan Anda</Reveal>
             </Typography.Title>
             <p className="mt-4 text-xs">
               <Reveal>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua.
+                Di Belee, kami tidak hanya menyediakan teknologi. Kami memberikan Anda kekuatan untuk membangun brand profesional, mengelola operasional secara efisien, dan melayani pelanggan dengan lebih baik. Mulai dari website otomatis hingga
+                dashboard analisis, semua dirancang untuk mendukung setiap langkah pertumbuhan usaha Anda.
               </Reveal>
             </p>
           </Card>
@@ -167,11 +166,11 @@ const Home = () => {
                 <Reveal color="#fff">Tunggu Apa Lagi?</Reveal>
               </Typography.Title>
               <p className="max-w-lg text-xs">
-                <Reveal color="#fff">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                </Reveal>
+                <Reveal color="#fff">Proses pendaftaran hanya beberapa menit. Dapatkan akses instan ke dashboard Anda dan mulai bangun wajah baru bisnis Anda sekarang juga.</Reveal>
               </p>
-              <Button className="mt-4 w-fit">Daftar Sebagai Mitra</Button>
+              <Button onClick={() => navigate('/member_register')} className="mt-4 w-fit">
+                Daftar Sebagai Mitra
+              </Button>
             </div>
           </Card>
         </div>

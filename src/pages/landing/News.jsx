@@ -38,9 +38,9 @@ const News = () => {
           </Typography.Title>
           <p className="max-w-md text-center text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore </p>
         </div>
-        <div className="mb-12 flex w-full flex-row items-center justify-between">
-          <Input.Search size="large" className="w-full min-w-96 max-w-96" placeholder="Cari topik berita" onSearch={(values) => setFilterValues({ ...filterValues, search: values })} />
-          <Select size="large" className="min-w-48" placeholder="Filter">
+        <div className="mb-12 flex w-full flex-col items-center justify-between gap-x-80 gap-y-4 md:flex-row">
+          <Input.Search size="large" className="w-full" placeholder="Cari topik berita" onSearch={(values) => setFilterValues({ ...filterValues, search: values })} />
+          <Select size="large" className="w-full md:max-w-52" placeholder="Filter">
             <Select.Option>Terbaru</Select.Option>
           </Select>
         </div>
@@ -48,7 +48,7 @@ const News = () => {
           {getAllNews.isLoading ? (
             <>
               {Array.from({ length: 4 }).map((_, index) => (
-                <Card key={index} className="col-span-1 w-full">
+                <Card key={index} className="col-span-4 w-full md:col-span-2 lg:col-span-1">
                   <div className="flex flex-col gap-y-4">
                     <Skeleton.Image active style={{ width: '100%' }} />
                     <div className="inline-flex items-center gap-x-2">
@@ -68,7 +68,7 @@ const News = () => {
                   hoverable
                   onClick={() => navigate('/berita_umkm/' + item.slug)}
                   key={item.id}
-                  className="col-span-1 w-full"
+                  className="col-span-4 w-full md:col-span-2 lg:col-span-1"
                   cover={<img className="p-2 pb-0" alt="example" style={{ height: '180px', objectFit: 'cover' }} src={item.thumbnail} loading="lazy" />}
                 >
                   <div className="flex flex-col gap-y-2">
