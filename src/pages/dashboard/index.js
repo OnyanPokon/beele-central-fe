@@ -6,3 +6,4 @@ export { default as Employees } from './employees/Employees';
 export { default as News } from './news/News';
 export { default as CreateNews } from './news/Create';
 export { default as EditNews } from './news/Edit';
+export { default as ProfileSettings } from './PorfileSettings';

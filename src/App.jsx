@@ -7,7 +7,7 @@ import { flattenLandingLinks } from './utils/landingLink';
 import { Notfound } from './pages/result';
 import { Result } from 'antd';
 import { useAuth } from './hooks';
-import { CreateNews, EditNews } from './pages/dashboard';
+import { CreateNews, EditNews, ProfileSettings } from './pages/dashboard';
 import { ReadNews } from './pages/landing';
 
 function App() {
@@ -52,7 +52,8 @@ function App() {
               })
             ),
             { path: '/dashboard/news/create', element: <CreateNews /> },
-            { path: '/dashboard/news/edit/:slug', element: <EditNews /> }
+            { path: '/dashboard/news/edit/:slug', element: <EditNews /> },
+            { path: '/dashboard/profile_settings', element: <ProfileSettings /> }
           ]
         },
         {
