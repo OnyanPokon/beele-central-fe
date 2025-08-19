@@ -56,4 +56,12 @@ export default class AuthService {
   static async changePassword(token, data) {
     return await api.post('/auth/change-password', { body: data, token });
   }
+
+  static async forgotPassword(data) {
+    return await api.post('/lupa-password/kirim-email', { body: data });
+  }
+
+  static async resetPassword(data) {
+    return await api.post('/lupa-password/ganti-password', { body: data });
+  }
 }
