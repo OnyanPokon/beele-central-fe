@@ -73,7 +73,7 @@ const ReadNews = () => {
                     hoverable
                     onClick={() => navigate('/berita_umkm/' + item.slug)}
                     key={item.id}
-                    className="col-span-1 w-full"
+                    className="col-span-4 w-full md:col-span-2 lg:col-span-1"
                     cover={<img className="p-2 pb-0" alt="example" style={{ height: '180px', objectFit: 'cover' }} src={item.thumbnail} loading="lazy" />}
                   >
                     <div className="flex flex-col gap-y-2">
