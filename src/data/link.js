@@ -98,5 +98,13 @@ export const authLink = [
   {
     path: '/auth/login',
     element: Auth.Login
+  },
+  {
+    path: '/auth/forgot_password',
+    element: Auth.ForgotPassword
+  },
+  {
+    path: '/auth/reset_password',
+    element: Auth.ResetPassword
   }
 ];
