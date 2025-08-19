@@ -12,7 +12,7 @@ export interface IncomingApiData {
 interface FormValue {
   name: string;
   agency: string;
-  status: 'menunggu' | 'publikasi';
+  status?: 'menunggu' | 'publikasi';
   desc: string;
   rating: number;
 }
@@ -20,7 +20,7 @@ interface FormValue {
 export interface OutgoingApiData {
   nama: string;
   instansi: string;
-  status: 'menunggu' | 'publikasi';
+  status?: 'menunggu' | 'publikasi';
   deskripsi: string;
   rating: number;
 }
@@ -47,9 +47,9 @@ export default class Testimonial extends Model {
   public static toApiData<T extends FormValue | FormValue[]>(testimonial: T): ReturnType<T, FormValue, OutgoingApiData> {
     if (Array.isArray(testimonial)) return testimonial.map((object) => this.toApiData(object)) as ReturnType<T, FormValue, OutgoingApiData>;
     const apiData: OutgoingApiData = {
+      ...(testimonial.status ? { status: testimonial.status } : {}),
       nama: testimonial.name,
       instansi: testimonial.agency,
-      status: testimonial.status,
       deskripsi: testimonial.desc,
       rating: testimonial.rating
     };

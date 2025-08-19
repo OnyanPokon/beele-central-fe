@@ -1,10 +1,10 @@
 import { Reveal } from '@/components';
 import { usePagination, useService } from '@/hooks';
-import { NewsService } from '@/services';
+import { NewsService, TestimonialService } from '@/services';
 import dateFormatter from '@/utils/dateFormatter';
 import timeAgo from '@/utils/timeAgo';
 import { CheckCircleFilled, ClockCircleOutlined, RightOutlined, ShopOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { Avatar, Button, Card, Skeleton, Tag, Typography } from 'antd';
+import { Avatar, Button, Card, Carousel, Rate, Skeleton, Tag, Typography } from 'antd';
 import gsap from 'gsap';
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -13,21 +13,32 @@ import getInitials from '@/utils/getInitials';
 
 const Home = () => {
   const { execute: executeNews, ...getAllNews } = useService(NewsService.getAll);
-  const pagination = usePagination({ totalData: getAllNews.totalData });
+  const { execute: executeTestimonials, ...getAllTestimonials } = useService(TestimonialService.getAll);
+  const newsPagination = usePagination({ totalData: getAllNews.totalData });
+  const testimonialsPagination = usePagination({ totalData: getAllTestimonials.totalData });
   const cardsWrapperRef = useRef(null);
   const navigate = useNavigate();
 
   const fetchNews = useCallback(() => {
     executeNews({
-      page: pagination.page,
-      per_page: pagination.per_page,
+      page: newsPagination.page,
+      per_page: newsPagination.per_page,
       search: ''
     });
-  }, [executeNews, pagination.page, pagination.per_page]);
+  }, [executeNews, newsPagination.page, newsPagination.per_page]);
+
+  const fetchTestimonials = useCallback(() => {
+    executeTestimonials({
+      page: testimonialsPagination.page,
+      per_page: testimonialsPagination.per_page,
+      search: ''
+    });
+  }, [executeTestimonials, testimonialsPagination.page, testimonialsPagination.per_page]);
 
   useEffect(() => {
     fetchNews();
-  }, [fetchNews]);
+    fetchTestimonials();
+  }, [fetchNews, fetchTestimonials]);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -57,6 +68,7 @@ const Home = () => {
   }, []);
 
   const news = getAllNews.data ?? [];
+  const testimonials = getAllTestimonials.data ?? [];
 
   return (
     <>
@@ -121,31 +133,13 @@ const Home = () => {
         </div>
       </section>
       <section className="mx-auto flex w-full max-w-screen-xl flex-col gap-y-10 px-6 py-32">
-        <div className="">
-          <Typography.Title level={3}>
-            <Reveal>Bagaimana pendapat orang?</Reveal>
-          </Typography.Title>
-        </div>
-        <div className="grid grid-cols-6 gap-4 gap-y-8">
-          <Card className="relative col-span-6 bg-gray-100/50 lg:col-span-2">
-            <div className="mt-4 flex flex-col gap-y-2">
-              <Typography.Title level={5} style={{ color: '#4172ab' }}>
-                <Reveal>Mohamad Rafiq Daud (Owner of UMKM GO)</Reveal>
-              </Typography.Title>
-              <p>
-                <Reveal>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Reveal>
-              </p>
-            </div>
-            <Avatar src="/image_asset/figure/user.png" className="absolute -top-4 left-6 border border-gray-200" size="large" style={{ backgroundColor: '#fff', color: '#396396' }} />
-          </Card>
-        </div>
-        <hr />
         <div className="grid grid-cols-6 gap-4">
           <Card className="col-span-6 bg-gray-100/50 lg:col-span-2">
             <Typography.Title level={5}>
               <Reveal>Lebih dari Platform, </Reveal>
               <Reveal>Kami Mitra Pertumbuhan Anda</Reveal>
             </Typography.Title>
+
             <p className="mt-4 text-xs">
               <Reveal>
                 Di Belee, kami tidak hanya menyediakan teknologi. Kami memberikan Anda kekuatan untuk membangun brand profesional, mengelola operasional secara efisien, dan melayani pelanggan dengan lebih baik. Mulai dari website otomatis hingga
@@ -155,7 +149,7 @@ const Home = () => {
           </Card>
           <Card
             style={{
-              backgroundImage: `url('/image_asset/background/hero_bg.png')`,
+              backgroundImage: "url('/image_asset/background/hero_bg.png')",
               backgroundPosition: 'center',
               backgroundSize: 'cover'
             }}
@@ -165,17 +159,56 @@ const Home = () => {
               <Typography.Title level={5} style={{ color: '#fff' }}>
                 <Reveal color="#fff">Tunggu Apa Lagi?</Reveal>
               </Typography.Title>
+
               <p className="max-w-lg text-xs">
                 <Reveal color="#fff">Proses pendaftaran hanya beberapa menit. Dapatkan akses instan ke dashboard Anda dan mulai bangun wajah baru bisnis Anda sekarang juga.</Reveal>
               </p>
+
               <Button onClick={() => navigate('/member_register')} className="mt-4 w-fit">
                 Daftar Sebagai Mitra
               </Button>
             </div>
           </Card>
         </div>
+        <hr className="mb-12" />
+        <div className="flex flex-col items-center gap-y-2">
+          <Typography.Title level={4} style={{ textAlign: 'center' }}>
+            Bagaimana pendapat orang?
+          </Typography.Title>
+          <p className="max-w-lg text-center text-xs md:text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <Carousel autoplay autoplaySpeed={1000} className="">
+          {getAllTestimonials.isLoading ? (
+            <>
+              <div>
+                <div className="mx-auto mb-2 flex max-w-4xl flex-col items-center gap-y-6 text-center">
+                  <span className="text-center text-lg font-bold lg:text-2xl">
+                    &quot; <Skeleton.Input active /> &quot;
+                  </span>
+                  <div className="inline-flex items-center gap-x-2">
+                    <Skeleton.Avatar active />
+                    <Skeleton.Input active /> | <Skeleton.Input active />
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            testimonials.map((item) => (
+              <div key={item.id}>
+                <div className="mx-auto mb-2 flex max-w-4xl flex-col items-center gap-y-6 text-center">
+                  <span className="text-center text-lg font-bold lg:text-2xl">&quot; {item.desc} &quot;</span>
+                  <Rate value={item.rating} />
+                  <div className="inline-flex items-center gap-x-2">
+                    <Avatar style={{ backgroundColor: '#ECF7FD', color: '#518ed6' }}>{getInitials(item.name)}</Avatar>
+                    <span className="text-xs font-bold">Mohamad Rafiq Daud</span> | <p className="m-0 text-xs"> {item.agency} </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </Carousel>
       </section>
-      <section className="mx-auto flex w-full max-w-screen-xl gap-x-10 px-6 pb-32 pt-12">
+      <section className="mx-auto flex w-full max-w-screen-xl flex-col gap-x-10 px-6 pb-32 pt-12 lg:flex-row">
         <div className="flex w-full flex-[1] flex-col gap-y-1 pt-6">
           <Typography.Title level={3}>
             <Reveal>Berita UMKM Terbaru</Reveal>

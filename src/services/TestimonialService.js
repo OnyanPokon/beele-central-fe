@@ -44,8 +44,8 @@ export default class TestimonialService {
    *  errors?: { [key: string]: string[] };
    * }>}
    */
-  static async update(id, data, token) {
-    return await api.patch(`/testimoni/${id}`, { body: Testimonial.toApiData(data), token });
+  static async verificate(id, data, token) {
+    return await api.patch(`/testimoni/verifikasi/${id}`, { body: Testimonial.toApiData(data), token });
   }
 
   /**

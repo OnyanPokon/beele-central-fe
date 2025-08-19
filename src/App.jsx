@@ -8,7 +8,7 @@ import { Notfound } from './pages/result';
 import { Result } from 'antd';
 import { useAuth } from './hooks';
 import { CreateNews, EditNews, ProfileSettings } from './pages/dashboard';
-import { ReadNews } from './pages/landing';
+import { ReadNews, Testimonial } from './pages/landing';
 
 function App() {
   const flatLandingLinks = flattenLandingLinks(landingLink);
@@ -26,6 +26,7 @@ function App() {
               element: <Element />
             })),
             { path: '/berita_umkm/:slug', element: <ReadNews /> },
+            { path: '/testimonial', element: <Testimonial /> },
             { path: '*', element: <Notfound /> }
           ]
         },
